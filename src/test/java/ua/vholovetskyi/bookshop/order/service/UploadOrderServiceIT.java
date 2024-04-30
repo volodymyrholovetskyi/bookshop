@@ -5,9 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
-import ua.vholovetskyi.onlinestore.customer.repository.CustomerRepository;
-import ua.vholovetskyi.onlinestore.data.CustomerBuilder;
-import ua.vholovetskyi.onlinestore.order.repository.OrderRepository;
+import ua.vholovetskyi.bookshop.customer.repository.CustomerRepository;
+import ua.vholovetskyi.bookshop.data.CustomerBuilder;
+import ua.vholovetskyi.bookshop.order.repository.OrderRepository;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
 

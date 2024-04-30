@@ -4,11 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import ua.vholovetskyi.onlinestore.order.model.OrderStatus;
+import ua.vholovetskyi.bookshop.order.model.OrderStatus;
 
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * @author Volodymyr Holovetskyi
+ * @version 1.0
+ * @since 2024-04-22
+ */
 @Getter
 @Builder
 @NoArgsConstructor

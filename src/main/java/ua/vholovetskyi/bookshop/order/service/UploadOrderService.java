@@ -7,14 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.vholovetskyi.onlinestore.customer.model.CustomerEntity;
-import ua.vholovetskyi.onlinestore.customer.repository.CustomerRepository;
-import ua.vholovetskyi.onlinestore.order.controller.dto.UploadOrder;
-import ua.vholovetskyi.onlinestore.order.exception.UploadOrderException;
-import ua.vholovetskyi.onlinestore.order.model.OrderEntity;
-import ua.vholovetskyi.onlinestore.order.repository.OrderRepository;
-import ua.vholovetskyi.onlinestore.order.validator.OrderJson;
-import ua.vholovetskyi.onlinestore.order.validator.OrderJsonValidator;
+import ua.vholovetskyi.bookshop.customer.model.CustomerEntity;
+import ua.vholovetskyi.bookshop.customer.repository.CustomerRepository;
+import ua.vholovetskyi.bookshop.order.controller.dto.UploadOrder;
+import ua.vholovetskyi.bookshop.order.exception.UploadOrderException;
+import ua.vholovetskyi.bookshop.order.model.OrderEntity;
+import ua.vholovetskyi.bookshop.order.repository.OrderRepository;
+import ua.vholovetskyi.bookshop.order.validator.OrderJson;
+import ua.vholovetskyi.bookshop.order.validator.OrderJsonValidator;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,8 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.vholovetskyi.onlinestore.order.mapper.OrderFactory.createNewOrder;
+import static ua.vholovetskyi.bookshop.order.mapper.OrderFactory.createNewOrder;
 
+/**
+ * @author Volodymyr Holovetskyi
+ * @version 1.0
+ * @since 2024-04-24
+ */
 @Service
 @Slf4j
 public class UploadOrderService {

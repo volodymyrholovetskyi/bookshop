@@ -12,11 +12,11 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import ua.vholovetskyi.onlinestore.commons.exception.ErrorResponse;
-import ua.vholovetskyi.onlinestore.customer.dto.CustomerDto;
-import ua.vholovetskyi.onlinestore.customer.model.CustomerEntity;
-import ua.vholovetskyi.onlinestore.customer.service.CustomerService;
-import ua.vholovetskyi.onlinestore.data.CustomerBuilder;
+import ua.vholovetskyi.bookshop.commons.exception.ErrorResponse;
+import ua.vholovetskyi.bookshop.customer.dto.CustomerDto;
+import ua.vholovetskyi.bookshop.customer.model.CustomerEntity;
+import ua.vholovetskyi.bookshop.customer.service.CustomerService;
+import ua.vholovetskyi.bookshop.data.CustomerBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -91,7 +91,7 @@ class CustomerControllerApiTest extends CustomerBuilder {
     @Test
     void shouldUpdateCustomer() {
         //given
-        var url = givenBaseUrlWithId();
+        var url = givenBaseUrl() + "/1";
         var customer = givenCustomer();
         var customerDto = givenCustomerDto();
 
@@ -110,7 +110,7 @@ class CustomerControllerApiTest extends CustomerBuilder {
     @MethodSource("wrongCustomers")
     void shouldNotUpdateCustomer(CustomerDto customer) {
         //given
-        var url = givenBaseUrlWithId();
+        var url = givenBaseUrl() + "/1";
 
         //when
         RequestEntity<CustomerDto> request = RequestEntity.put(URI.create(url)).body(customer);
@@ -124,7 +124,7 @@ class CustomerControllerApiTest extends CustomerBuilder {
     @Test
     void shouldDeleteCustomer() {
         //given
-        var url = givenBaseUrlWithId();
+        var url = givenBaseUrl() + "/1";
 
         //when
         RequestEntity<?> request = RequestEntity.delete(URI.create(url)).build();
@@ -138,9 +138,5 @@ class CustomerControllerApiTest extends CustomerBuilder {
 
     private String givenBaseUrl() {
         return "http://localhost:" + port + "/api/customers";
-    }
-
-    private String givenBaseUrlWithId() {
-        return "http://localhost:" + port + "/api/customers/1";
     }
 }

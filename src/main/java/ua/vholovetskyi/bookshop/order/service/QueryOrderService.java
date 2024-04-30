@@ -4,17 +4,22 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import ua.vholovetskyi.onlinestore.order.controller.dto.OrderDetails;
-import ua.vholovetskyi.onlinestore.order.controller.dto.OrderPagination;
-import ua.vholovetskyi.onlinestore.order.controller.dto.OrderPaginationDto;
-import ua.vholovetskyi.onlinestore.order.exception.OrderNotFoundException;
-import ua.vholovetskyi.onlinestore.order.mapper.OrderDtoMapper;
-import ua.vholovetskyi.onlinestore.order.model.OrderEntity;
-import ua.vholovetskyi.onlinestore.order.repository.OrderRepository;
+import ua.vholovetskyi.bookshop.order.controller.dto.OrderDetails;
+import ua.vholovetskyi.bookshop.order.controller.dto.OrderPagination;
+import ua.vholovetskyi.bookshop.order.controller.dto.OrderPaginationDto;
+import ua.vholovetskyi.bookshop.order.exception.OrderNotFoundException;
+import ua.vholovetskyi.bookshop.order.mapper.OrderDtoMapper;
+import ua.vholovetskyi.bookshop.order.model.OrderEntity;
+import ua.vholovetskyi.bookshop.order.repository.OrderRepository;
 
-import static ua.vholovetskyi.onlinestore.commons.helper.OrderFilterHelper.*;
-import static ua.vholovetskyi.onlinestore.order.mapper.OrderDtoMapper.mapToOrderPagination;
+import static ua.vholovetskyi.bookshop.commons.helper.OrderFilterHelper.*;
+import static ua.vholovetskyi.bookshop.order.mapper.OrderDtoMapper.mapToOrderPagination;
 
+/**
+ * @author Volodymyr Holovetskyi
+ * @version 1.0
+ * @since 2024-04-24
+ */
 @Service
 @RequiredArgsConstructor
 public class QueryOrderService {

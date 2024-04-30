@@ -7,6 +7,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+/**
+ * @author Volodymyr Holovetskyi
+ * @version 1.0
+ * @since 2024-04-24
+ */
 @Component
 @RequiredArgsConstructor
 public class OrderJsonValidator {

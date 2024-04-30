@@ -6,7 +6,7 @@ import lombok.*;
 /**
  * @author Volodymyr Holovetskyi
  * @version 1.0
- * @since 2024-04-5
+ * @since 2024-04-21
  */
 @Getter
 @Setter

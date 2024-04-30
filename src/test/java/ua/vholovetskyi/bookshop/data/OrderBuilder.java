@@ -1,10 +1,10 @@
 package ua.vholovetskyi.bookshop.data;
 
 import org.junit.jupiter.params.provider.Arguments;
-import ua.vholovetskyi.onlinestore.customer.model.CustomerEntity;
-import ua.vholovetskyi.onlinestore.order.controller.dto.*;
-import ua.vholovetskyi.onlinestore.order.model.OrderEntity;
-import ua.vholovetskyi.onlinestore.order.model.OrderStatus;
+import ua.vholovetskyi.bookshop.customer.model.CustomerEntity;
+import ua.vholovetskyi.bookshop.order.controller.dto.*;
+import ua.vholovetskyi.bookshop.order.model.OrderEntity;
+import ua.vholovetskyi.bookshop.order.model.OrderStatus;
 
 import java.time.LocalDate;
 import java.util.List;

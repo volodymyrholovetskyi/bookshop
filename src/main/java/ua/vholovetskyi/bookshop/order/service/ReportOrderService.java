@@ -3,16 +3,21 @@ package ua.vholovetskyi.bookshop.order.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ua.vholovetskyi.onlinestore.order.controller.dto.OrderFilteringDto;
-import ua.vholovetskyi.onlinestore.order.controller.dto.OrderList;
-import ua.vholovetskyi.onlinestore.order.model.OrderEntity;
-import ua.vholovetskyi.onlinestore.order.repository.OrderRepository;
+import ua.vholovetskyi.bookshop.order.controller.dto.OrderFilteringDto;
+import ua.vholovetskyi.bookshop.order.controller.dto.OrderList;
+import ua.vholovetskyi.bookshop.order.model.OrderEntity;
+import ua.vholovetskyi.bookshop.order.repository.OrderRepository;
 
 import java.util.List;
 
-import static ua.vholovetskyi.onlinestore.commons.helper.OrderFilterHelper.*;
-import static ua.vholovetskyi.onlinestore.order.mapper.OrderDtoMapper.mapToOrderListDto;
+import static ua.vholovetskyi.bookshop.commons.helper.OrderFilterHelper.*;
+import static ua.vholovetskyi.bookshop.order.mapper.OrderDtoMapper.mapToOrderListDto;
 
+/**
+ * @author Volodymyr Holovetskyi
+ * @version 1.0
+ * @since 2024-04-24
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j

@@ -1,12 +1,17 @@
 package ua.vholovetskyi.bookshop.order.mapper;
 
-import ua.vholovetskyi.onlinestore.order.controller.dto.OrderDetails;
-import ua.vholovetskyi.onlinestore.order.controller.dto.OrderList;
-import ua.vholovetskyi.onlinestore.order.controller.dto.OrderPagination;
-import ua.vholovetskyi.onlinestore.order.model.OrderEntity;
+import ua.vholovetskyi.bookshop.order.controller.dto.OrderDetails;
+import ua.vholovetskyi.bookshop.order.controller.dto.OrderList;
+import ua.vholovetskyi.bookshop.order.controller.dto.OrderPagination;
+import ua.vholovetskyi.bookshop.order.model.OrderEntity;
 
 import java.util.List;
 
+/**
+ * @author Volodymyr Holovetskyi
+ * @version 1.0
+ * @since 2024-04-24
+ */
 public class OrderDtoMapper {
 
     public static OrderPagination mapToOrderPagination(List<OrderEntity> orders, int totalPage) {

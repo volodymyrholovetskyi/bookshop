@@ -1,13 +1,18 @@
 package ua.vholovetskyi.bookshop.order.mapper;
 
-import ua.vholovetskyi.onlinestore.order.controller.dto.OrderDto;
-import ua.vholovetskyi.onlinestore.order.controller.dto.OrderSummary;
-import ua.vholovetskyi.onlinestore.order.model.OrderEntity;
-import ua.vholovetskyi.onlinestore.order.model.OrderStatus;
-import ua.vholovetskyi.onlinestore.order.validator.OrderJson;
+import ua.vholovetskyi.bookshop.order.controller.dto.OrderDto;
+import ua.vholovetskyi.bookshop.order.controller.dto.OrderSummary;
+import ua.vholovetskyi.bookshop.order.model.OrderEntity;
+import ua.vholovetskyi.bookshop.order.model.OrderStatus;
+import ua.vholovetskyi.bookshop.order.validator.OrderJson;
 
 import java.time.LocalDate;
 
+/**
+ * @author Volodymyr Holovetskyi
+ * @version 1.0
+ * @since 2024-04-24
+ */
 public class OrderFactory {
 
     public static OrderEntity createNewOrder(OrderDto orderDto) {

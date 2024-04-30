@@ -11,6 +11,11 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Volodymyr Holovetskyi
+ * @version 1.0
+ * @since 2024-04-20
+ */
 @RestControllerAdvice
 public class GlobalHandlerException {
 

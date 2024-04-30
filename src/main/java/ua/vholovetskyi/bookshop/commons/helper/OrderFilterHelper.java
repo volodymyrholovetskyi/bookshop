@@ -1,6 +1,11 @@
 package ua.vholovetskyi.bookshop.commons.helper;
 
-import ua.vholovetskyi.onlinestore.order.controller.dto.OrderFilteringDto;
+/**
+ * @author Volodymyr Holovetskyi
+ * @version 1.0
+ * @since 2024-04-20
+ */
+import ua.vholovetskyi.bookshop.order.controller.dto.OrderFilteringDto;
 
 import java.util.Objects;
 public final class OrderFilterHelper {

@@ -5,6 +5,11 @@ import jakarta.validation.ConstraintValidatorContext;
 
 import java.util.Set;
 
+/**
+ * @author Volodymyr Holovetskyi
+ * @version 1.0
+ * @since 2024-04-20
+ */
 public class StatusValidator implements ConstraintValidator<StatusValidation, String> {
     @Override
     public boolean isValid(String status, ConstraintValidatorContext constraintContext) {

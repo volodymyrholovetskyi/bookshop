@@ -2,7 +2,7 @@ package ua.vholovetskyi.bookshop.order.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import ua.vholovetskyi.onlinestore.order.controller.dto.OrderDto;
+import ua.vholovetskyi.bookshop.order.controller.dto.OrderDto;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Volodymyr Holovetskyi
  * @version 1.0
- * @since 2024-04-5
+ * @since 2024-04-25
  */
 @Getter
 @Setter

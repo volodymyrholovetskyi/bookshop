@@ -3,16 +3,21 @@ package ua.vholovetskyi.bookshop.order.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.vholovetskyi.onlinestore.customer.exception.CustomerNotFoundException;
-import ua.vholovetskyi.onlinestore.customer.repository.CustomerRepository;
-import ua.vholovetskyi.onlinestore.order.controller.dto.OrderDto;
-import ua.vholovetskyi.onlinestore.order.controller.dto.OrderSummary;
-import ua.vholovetskyi.onlinestore.order.exception.OrderNotFoundException;
-import ua.vholovetskyi.onlinestore.order.repository.OrderRepository;
+import ua.vholovetskyi.bookshop.customer.exception.CustomerNotFoundException;
+import ua.vholovetskyi.bookshop.customer.repository.CustomerRepository;
+import ua.vholovetskyi.bookshop.order.controller.dto.OrderDto;
+import ua.vholovetskyi.bookshop.order.controller.dto.OrderSummary;
+import ua.vholovetskyi.bookshop.order.exception.OrderNotFoundException;
+import ua.vholovetskyi.bookshop.order.repository.OrderRepository;
 
-import static ua.vholovetskyi.onlinestore.order.mapper.OrderFactory.createNewOrder;
-import static ua.vholovetskyi.onlinestore.order.mapper.OrderFactory.createOrderSummary;
+import static ua.vholovetskyi.bookshop.order.mapper.OrderFactory.createNewOrder;
+import static ua.vholovetskyi.bookshop.order.mapper.OrderFactory.createOrderSummary;
 
+/**
+ * @author Volodymyr Holovetskyi
+ * @version 1.0
+ * @since 2024-04-24
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional

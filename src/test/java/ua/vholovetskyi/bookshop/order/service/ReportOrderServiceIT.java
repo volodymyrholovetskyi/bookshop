@@ -6,9 +6,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import ua.vholovetskyi.onlinestore.customer.repository.CustomerRepository;
-import ua.vholovetskyi.onlinestore.data.OrderBuilder;
-import ua.vholovetskyi.onlinestore.order.repository.OrderRepository;
+import ua.vholovetskyi.bookshop.customer.repository.CustomerRepository;
+import ua.vholovetskyi.bookshop.data.OrderBuilder;
+import ua.vholovetskyi.bookshop.order.repository.OrderRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

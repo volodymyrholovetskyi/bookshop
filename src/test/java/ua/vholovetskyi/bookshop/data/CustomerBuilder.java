@@ -1,8 +1,8 @@
 package ua.vholovetskyi.bookshop.data;
 
 import org.junit.jupiter.params.provider.Arguments;
-import ua.vholovetskyi.onlinestore.customer.dto.CustomerDto;
-import ua.vholovetskyi.onlinestore.customer.model.CustomerEntity;
+import ua.vholovetskyi.bookshop.customer.dto.CustomerDto;
+import ua.vholovetskyi.bookshop.customer.model.CustomerEntity;
 
 import java.util.List;
 import java.util.stream.Stream;

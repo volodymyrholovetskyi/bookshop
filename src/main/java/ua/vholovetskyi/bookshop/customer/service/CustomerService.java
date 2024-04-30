@@ -3,13 +3,18 @@ package ua.vholovetskyi.bookshop.customer.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.vholovetskyi.onlinestore.customer.exception.CustomerNotFoundException;
-import ua.vholovetskyi.onlinestore.customer.exception.EmailAlreadyExistsException;
-import ua.vholovetskyi.onlinestore.customer.model.CustomerEntity;
-import ua.vholovetskyi.onlinestore.customer.repository.CustomerRepository;
+import ua.vholovetskyi.bookshop.customer.exception.CustomerNotFoundException;
+import ua.vholovetskyi.bookshop.customer.exception.EmailAlreadyExistsException;
+import ua.vholovetskyi.bookshop.customer.model.CustomerEntity;
+import ua.vholovetskyi.bookshop.customer.repository.CustomerRepository;
 
 import java.util.List;
 
+/**
+ * @author Volodymyr Holovetskyi
+ * @version 1.0
+ * @since 2024-04-20
+ */
 @Service
 @RequiredArgsConstructor
 public class CustomerService {

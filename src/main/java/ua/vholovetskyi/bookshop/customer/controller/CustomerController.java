@@ -4,14 +4,19 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ua.vholovetskyi.onlinestore.customer.dto.CustomerDto;
-import ua.vholovetskyi.onlinestore.customer.model.CustomerEntity;
-import ua.vholovetskyi.onlinestore.customer.service.CustomerService;
+import ua.vholovetskyi.bookshop.customer.dto.CustomerDto;
+import ua.vholovetskyi.bookshop.customer.model.CustomerEntity;
+import ua.vholovetskyi.bookshop.customer.service.CustomerService;
 
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
+/**
+ * @author Volodymyr Holovetskyi
+ * @version 1.0
+ * @since 2024-04-20
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/customers")

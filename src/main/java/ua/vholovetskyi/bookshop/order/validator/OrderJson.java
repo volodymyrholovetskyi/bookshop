@@ -6,11 +6,16 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import ua.vholovetskyi.onlinestore.commons.annotation.DateFormatValidation;
-import ua.vholovetskyi.onlinestore.commons.annotation.StatusValidation;
+import ua.vholovetskyi.bookshop.commons.annotation.DateFormatValidation;
+import ua.vholovetskyi.bookshop.commons.annotation.StatusValidation;
 
 import java.util.List;
 
+/**
+ * @author Volodymyr Holovetskyi
+ * @version 1.0
+ * @since 2024-04-24
+ */
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor

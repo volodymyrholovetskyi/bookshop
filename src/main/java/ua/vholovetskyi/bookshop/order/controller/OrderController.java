@@ -13,13 +13,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ua.vholovetskyi.onlinestore.order.controller.dto.*;
-import ua.vholovetskyi.onlinestore.order.exception.ReportOrderException;
-import ua.vholovetskyi.onlinestore.order.exception.UploadOrderException;
-import ua.vholovetskyi.onlinestore.order.service.OrderService;
-import ua.vholovetskyi.onlinestore.order.service.QueryOrderService;
-import ua.vholovetskyi.onlinestore.order.service.ReportOrderService;
-import ua.vholovetskyi.onlinestore.order.service.UploadOrderService;
+import ua.vholovetskyi.bookshop.order.controller.dto.*;
+import ua.vholovetskyi.bookshop.order.exception.ReportOrderException;
+import ua.vholovetskyi.bookshop.order.exception.UploadOrderException;
+import ua.vholovetskyi.bookshop.order.service.OrderService;
+import ua.vholovetskyi.bookshop.order.service.QueryOrderService;
+import ua.vholovetskyi.bookshop.order.service.ReportOrderService;
+import ua.vholovetskyi.bookshop.order.service.UploadOrderService;
+
 
 import java.io.*;
 import java.util.Arrays;
@@ -27,6 +28,11 @@ import java.util.List;
 
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
+/**
+ * @author Volodymyr Holovetskyi
+ * @version 1.0
+ * @since 2024-04-22
+ */
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
