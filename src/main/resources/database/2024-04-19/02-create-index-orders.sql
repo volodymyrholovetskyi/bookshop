@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset vholovetskyi:6
+--changeset vholovetskyi:5
 
 CREATE INDEX IF NOT EXISTS index_custId_on_orders ON orders using btree (cust_id);
 CREATE INDEX IF NOT EXISTS index_custId_and_status_on_orders ON orders using btree (cust_id, status);

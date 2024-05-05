@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset vholovetskyi:5
+--changeset vholovetskyi:4
 
 CREATE TABLE IF NOT EXISTS orders
 (
