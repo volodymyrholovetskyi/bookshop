@@ -11,7 +11,41 @@
 
 ## Api-docs
 
+- Filtering by fields:
+  - custId (required):
+
+    ```
+    {
+     "custId": 1
+    }
+    ```
+  - custId and status(NEW, PAID, CANCELED, SHIPPED):
+    ```
+    {
+     "custId": 1,
+     "status": "NEW"
+    }
+    ```
+  - custId and order date:
+    ```
+    {
+     "custId": 1,
+     "from": "2024-04-15",
+     "to": "2024-05-15"
+    }
+    ```
+  - custId, status and order date:
+    ```
+    {
+     "custId": 1,
+     "status": "NEW",
+     "from": "2024-04-15",
+     "to": "2024-05-15"
+    }
+    ```
+
 > - Swagger UI: http://localhost:8080/swagger-ui/index.html
+
 
 ## Technologies
 - Java 17
