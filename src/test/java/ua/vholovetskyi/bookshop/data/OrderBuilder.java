@@ -7,6 +7,7 @@ import ua.vholovetskyi.bookshop.order.model.OrderEntity;
 import ua.vholovetskyi.bookshop.order.model.OrderStatus;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -27,22 +28,22 @@ public abstract class OrderBuilder {
     }
 
     protected OrderEntity givenOrder() {
+        var items = new ArrayList<String>();
+        items.add("Effective Java");
+        items.add("Concurrency Java");
         return OrderEntity.builder()
-                .items(List.of(
-                        "Effective Java",
-                        "Concurrency Java"
-                ))
+                .items(items)
                 .customerId(1L)
                 .status(OrderStatus.NEW)
                 .build();
     }
 
     protected OrderDto givenUpdateOrderDto() {
+        var items = new ArrayList<String>();
+        items.add("Java Database");
         return OrderDto.builder()
                 .custId(1L)
-                .items(List.of(
-                        "Java Database"
-                ))
+                .items(items)
                 .status(OrderStatus.PAID)
                 .build();
     }

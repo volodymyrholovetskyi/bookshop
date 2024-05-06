@@ -66,11 +66,11 @@ class OrderServiceIT extends OrderBuilder {
 
         //when
         orderService.updateOrder(1L, orderDto);
-        var updateStatus = orderRepository.findById(1L);
+        var updateOrder = orderRepository.findById(1L);
 
         //then
-        assertThat(updateStatus.get().getStatus()).isEqualTo(OrderStatus.PAID);
-        assertThat(updateStatus.get().getItems().size()).isEqualTo(1);
+        assertThat(updateOrder.get().getStatus()).isEqualTo(OrderStatus.PAID);
+        assertThat(updateOrder.get().getItems().size()).isEqualTo(1);
     }
 
     @Test

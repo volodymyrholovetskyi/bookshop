@@ -8,6 +8,9 @@ import ua.vholovetskyi.bookshop.customer.repository.CustomerRepository;
 import ua.vholovetskyi.bookshop.order.controller.dto.OrderDto;
 import ua.vholovetskyi.bookshop.order.controller.dto.OrderSummary;
 import ua.vholovetskyi.bookshop.order.exception.OrderNotFoundException;
+import ua.vholovetskyi.bookshop.order.mapper.OrderDtoMapper;
+import ua.vholovetskyi.bookshop.order.mapper.OrderFactory;
+import ua.vholovetskyi.bookshop.order.model.OrderEntity;
 import ua.vholovetskyi.bookshop.order.repository.OrderRepository;
 
 import static ua.vholovetskyi.bookshop.order.mapper.OrderFactory.createNewOrder;
@@ -27,30 +30,31 @@ public class OrderService {
     private final CustomerRepository customerRepository;
 
     public OrderSummary createOrder(OrderDto orderDto) {
-        if (!validateCustomerExists(orderDto.getCustId())) {
-            throw new CustomerNotFoundException(orderDto.getCustId());
-        }
-        var saveOrder = orderRepository.save(createNewOrder(orderDto));
-        return createOrderSummary(saveOrder);
+        validateCustomerExists(orderDto.getCustId());
+        var savedOrder = orderRepository.save(createNewOrder(orderDto));
+        return createOrderSummary(savedOrder);
     }
 
     public void updateOrder(Long id, OrderDto orderDto) {
-        if (!validateCustomerExists(orderDto.getCustId())) {
-            throw new CustomerNotFoundException(orderDto.getCustId());
-        }
-        orderRepository.findById(id)
-                .map(loadOrder -> loadOrder.updateFields(orderDto))
-                .orElseThrow(() -> new OrderNotFoundException(id));
+        validateOrderExists(id);
+        validateCustomerExists(orderDto.getCustId());
+        orderRepository.save(createNewOrder(id, orderDto));
     }
 
     public void deleteOrder(Long id) {
-        if (!validateCustomerExists(id)) {
-            throw new OrderNotFoundException(id);
-        }
+        validateOrderExists(id);
         orderRepository.deleteById(id);
     }
 
-    private boolean validateCustomerExists(Long id) {
-        return customerRepository.existsById(id);
+    private void validateCustomerExists(Long id) {
+        if (customerRepository.findById(id).isEmpty()) {
+            throw new CustomerNotFoundException(id);
+        }
+    }
+
+    private void validateOrderExists(Long id) {
+        if (orderRepository.findById(id).isEmpty()) {
+            throw new OrderNotFoundException(id);
+        }
     }
 }

@@ -35,13 +35,12 @@ public class CustomerService {
         return customerRepo.findById(customer.getId())
                 .map(loadCustomer -> {
                     validateCustomerEmailExists(loadCustomer, customer);
-                    return customerRepo.save(loadCustomer.updateFields(customer));
-                })
-                .orElseThrow(() -> new CustomerNotFoundException(customer.getId()));
+                    return customerRepo.save(customer);
+                }).orElseThrow(() -> new CustomerNotFoundException(customer.getId()));
     }
 
     public void deleteById(Long id) {
-        validateCustomerIdExists(id);
+        validateCustomerExists(id);
         customerRepo.deleteById(id);
     }
 
@@ -57,8 +56,8 @@ public class CustomerService {
         }
     }
 
-    private void validateCustomerIdExists(Long id) {
-        if (!customerRepo.existsById(id)) {
+    private void validateCustomerExists(Long id) {
+        if (customerRepo.findById(id).isEmpty()) {
             throw new CustomerNotFoundException(id);
         }
     }

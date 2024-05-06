@@ -41,32 +41,4 @@ public class CustomerEntity {
     public boolean equalEmails(String anotherEmail) {
         return email.equalsIgnoreCase(anotherEmail);
     }
-
-    public CustomerEntity updateFields(CustomerEntity customer) {
-        if (customer.getId() != null) {
-            this.id = customer.getId();
-        }
-        if (customer.getFirstName() != null) {
-            this.firstName = customer.getFirstName();
-        }
-        if (customer.getLastName() != null) {
-            this.lastName = customer.getLastName();
-        }
-        if (customer.getEmail() != null) {
-            this.email = customer.getEmail();
-        }
-        if (customer.getPhone() != null) {
-            this.phone = customer.getPhone();
-        }
-        if (customer.getStreet() != null) {
-            this.street = customer.getStreet();
-        }
-        if (customer.getCity() != null) {
-            this.city = customer.getCity();
-        }
-        if (customer.zipCode != null) {
-            this.zipCode = customer.getZipCode();
-        }
-        return this;
-    }
 }

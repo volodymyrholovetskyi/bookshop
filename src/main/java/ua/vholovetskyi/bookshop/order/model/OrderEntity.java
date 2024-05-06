@@ -45,18 +45,5 @@ public class OrderEntity implements Serializable {
     @Builder.Default
     @Column(nullable = false)
     private LocalDate orderDate = LocalDate.now();
-
-    public OrderEntity updateFields(OrderDto orderDto) {
-        if (orderDto.getItems() != null && orderDto.getItems().size() > 0) {
-            this.items = orderDto.getItems();
-        }
-        if (orderDto.getStatus() != null) {
-            this.status = orderDto.getStatus();
-        }
-        if (orderDto.getCustId() != null) {
-            this.customerId = orderDto.getCustId();
-        }
-        return this;
-    }
 }
 
