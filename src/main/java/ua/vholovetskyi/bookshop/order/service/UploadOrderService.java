@@ -3,8 +3,8 @@ package ua.vholovetskyi.bookshop.order.service;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.vholovetskyi.bookshop.customer.model.CustomerEntity;
@@ -12,14 +12,12 @@ import ua.vholovetskyi.bookshop.customer.repository.CustomerRepository;
 import ua.vholovetskyi.bookshop.order.controller.dto.UploadOrder;
 import ua.vholovetskyi.bookshop.order.exception.UploadOrderException;
 import ua.vholovetskyi.bookshop.order.model.OrderEntity;
-import ua.vholovetskyi.bookshop.order.repository.OrderRepository;
 import ua.vholovetskyi.bookshop.order.validator.OrderJson;
 import ua.vholovetskyi.bookshop.order.validator.OrderJsonValidator;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static ua.vholovetskyi.bookshop.order.mapper.OrderFactory.createNewOrder;
@@ -31,49 +29,40 @@ import static ua.vholovetskyi.bookshop.order.mapper.OrderFactory.createNewOrder;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class UploadOrderService {
 
-    private final int batchSize;
     private final ObjectMapper objectMapper;
-    private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
     private final OrderJsonValidator validator;
-
-    public UploadOrderService(@Value("${order.batch.size}") int batchSize, ObjectMapper objectMapper, OrderRepository orderRepository,
-                              CustomerRepository customerRepository, OrderJsonValidator validator) {
-        this.batchSize = batchSize;
-        this.objectMapper = objectMapper;
-        this.orderRepository = orderRepository;
-        this.customerRepository = customerRepository;
-        this.validator = validator;
-    }
+    private final BatchOrderService batchOrderService;
 
     @Transactional
     public UploadOrder uploadOrders(String fileName, InputStream inputStream) {
-        return parseAndSaveOrders(fileName, inputStream);
+        return parseOrders(fileName, inputStream);
     }
 
-    private UploadOrder parseAndSaveOrders(String fileName, InputStream inputStream) {
-        log.info("Start of INSERT uploaded %s file to the DB...".formatted(fileName));
-        var batchItems = new ArrayList<OrderEntity>(batchSize);
+    private UploadOrder parseOrders(String fileName, InputStream inputStream) {
+        log.info("Start parse uploaded %s file...".formatted(fileName));
+        var orders = new ArrayList<OrderEntity>();
         var response = new UploadOrder();
         try (JsonParser jsonParser = objectMapper.createParser(inputStream)) {
             if (jsonParser.nextToken() == JsonToken.START_ARRAY) {
                 while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
                     var orderJson = objectMapper.readValue(jsonParser, OrderJson.class);
-                    var isValid = isValidOrder(orderJson);
-                    response.incrementCounter(isValid);
-                    if (isValid) {
-                        batchItems.add(createNewOrder(orderJson));
-                        batchProcessing(batchItems);
+                    var validOrder = isValidOrder(orderJson);
+                    response.incrementCounter(validOrder);
+                    if (validOrder) {
+                        orders.add(createNewOrder(orderJson));
+                        batchOrderService.batchProcessing(orders, true);
                     }
                 }
             }
-            saveAllOrders(batchItems);
-            log.info("End of INSERT to DB...");
+            batchOrderService.batchProcessing(orders, false);
+            log.info("End parse uploaded %s file...".formatted(fileName));
         } catch (
                 IOException e) {
-            log.warn("Error in uploadOrders() method! Error message: %s".formatted(e.getMessage()));
+            log.warn("Error in parseOrders() method! Error message: %s".formatted(e.getMessage()));
             throw new UploadOrderException(e);
         }
         return response;
@@ -81,20 +70,6 @@ public class UploadOrderService {
 
     private boolean isValidOrder(OrderJson orderJson) {
         return validator.isValid(orderJson) && findById(orderJson.getCustId()).isPresent();
-    }
-
-    private void batchProcessing(List<OrderEntity> orders) {
-        if (orders.size() == batchSize) {
-            saveAllOrders(orders);
-        }
-    }
-
-    private void saveAllOrders(List<OrderEntity> orders) {
-        if (!orders.isEmpty()) {
-            var savedOrders = orderRepository.saveAllAndFlush(orders);
-            orders.clear();
-            log.info("Batch: %d orders...".formatted(savedOrders.size()));
-        }
     }
 
     private Optional<CustomerEntity> findById(Long id) {

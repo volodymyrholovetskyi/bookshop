@@ -76,6 +76,7 @@ class OrderServiceIT extends OrderBuilder {
     @Test
     void shouldThrowsException_whenOrderNotFound() {
         //given
+        givenSaveCustomer();
         var orderDto = givenUpdateOrderDto();
 
         //when
@@ -87,8 +88,9 @@ class OrderServiceIT extends OrderBuilder {
     }
 
     @Test
-    void shouldThrowsException_whenUpdateStatusOrder_ifOrderNotFound() {
+    void shouldThrowsException_whenUpdateOrder_ifOrderNotFound() {
         //given
+        givenSaveCustomer();
         var orderDto = givenUpdateOrderDto();
 
         //when

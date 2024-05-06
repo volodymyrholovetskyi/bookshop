@@ -35,13 +35,11 @@ public class OrderService {
     }
 
     public void updateOrder(Long id, OrderDto orderDto) {
+        if (!validateCustomerExists(orderDto.getCustId())) {
+            throw new CustomerNotFoundException(orderDto.getCustId());
+        }
         orderRepository.findById(id)
-                .map(loadOrder -> {
-                    if (!validateCustomerExists(orderDto.getCustId())) {
-                        throw new CustomerNotFoundException(orderDto.getCustId());
-                    }
-                    return loadOrder.updateFields(orderDto);
-                })
+                .map(loadOrder -> loadOrder.updateFields(orderDto))
                 .orElseThrow(() -> new OrderNotFoundException(id));
     }
 

@@ -50,8 +50,8 @@ public class OrderEntity implements Serializable {
         if (orderDto.getItems() != null && orderDto.getItems().size() > 0) {
             this.items = orderDto.getItems();
         }
-        if (orderDto.getOrderStatus() != null) {
-            this.status = orderDto.getOrderStatus();
+        if (orderDto.getStatus() != null) {
+            this.status = orderDto.getStatus();
         }
         if (orderDto.getCustId() != null) {
             this.customerId = orderDto.getCustId();

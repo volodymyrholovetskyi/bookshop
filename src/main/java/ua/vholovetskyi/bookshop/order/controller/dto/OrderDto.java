@@ -26,5 +26,5 @@ public class OrderDto {
     @NotNull(message = "{order.filed.required}")
     private Long custId;
     @NotNull(message = "{order.filed.required}")
-    private OrderStatus orderStatus;
+    private OrderStatus status;
 }

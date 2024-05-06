@@ -22,7 +22,7 @@ public abstract class OrderBuilder {
                         "Effective Java",
                         "Concurrency Java"
                 ))
-                .orderStatus(OrderStatus.NEW)
+                .status(OrderStatus.NEW)
                 .build();
     }
 
@@ -43,7 +43,7 @@ public abstract class OrderBuilder {
                 .items(List.of(
                         "Java Database"
                 ))
-                .orderStatus(OrderStatus.PAID)
+                .status(OrderStatus.PAID)
                 .build();
     }
 

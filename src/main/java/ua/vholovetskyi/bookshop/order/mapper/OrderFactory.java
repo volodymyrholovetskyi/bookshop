@@ -19,7 +19,7 @@ public class OrderFactory {
         return OrderEntity.builder()
                 .customerId(orderDto.getCustId())
                 .items(orderDto.getItems())
-                .status(orderDto.getOrderStatus())
+                .status(orderDto.getStatus())
                 .build();
     }
 
@@ -28,7 +28,7 @@ public class OrderFactory {
                 .id(id)
                 .customerId(orderDto.getCustId())
                 .items(orderDto.getItems())
-                .status(orderDto.getOrderStatus())
+                .status(orderDto.getStatus())
                 .build();
     }
 
