@@ -18,8 +18,8 @@ public class UploadOrder {
     private int importedRecord;
     private int nonImportedRecord;
 
-    public void incrementCounter(boolean isImportedRecord) {
-        if (isImportedRecord) {
+    public void countRecord(boolean isImported) {
+        if (isImported) {
             importedRecord++;
             return;
         }

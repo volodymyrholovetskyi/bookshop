@@ -17,7 +17,7 @@ import java.util.Set;
 public class OrderJsonValidator {
     private final Validator validator;
 
-    public boolean isValid(OrderJson orderJson) {
+    public boolean validateOrder(OrderJson orderJson) {
         Set<ConstraintViolation<OrderJson>> validate = validator.validate(orderJson);
         return validate.isEmpty();
     }

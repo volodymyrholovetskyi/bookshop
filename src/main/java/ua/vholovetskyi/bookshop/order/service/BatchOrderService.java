@@ -18,8 +18,8 @@ public class BatchOrderService {
     @Value("${spring.jpa.properties.hibernate.jdbc.batch_size}")
     private int batchSize;
 
-    public void batchProcessing(List<OrderEntity> orders, boolean hasNext) {
-        if (orders.size() % batchSize == 0 || !hasNext)
+    public void batchProcessing(List<OrderEntity> orders, boolean isFinished) {
+        if (!orders.isEmpty() && (orders.size() % batchSize == 0 || isFinished))
             saveAll(orders);
     }
 
