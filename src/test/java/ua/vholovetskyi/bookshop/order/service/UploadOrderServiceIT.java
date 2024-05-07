@@ -40,7 +40,22 @@ class UploadOrderServiceIT extends CustomerBuilder {
         assertThat(uploadOrder.getNonImportedRecord()).isEqualTo(3);
     }
 
+    @Test
+    void uploadEmptyOrders() throws IOException {
+        //given
+        givenSaveCustomer();
+        var resource = new ClassPathResource("empty_test.json");
+
+        //when
+        var uploadOrder = orderService.uploadOrders(resource.getFilename(), resource.getInputStream());
+
+        //then
+        assertThat(uploadOrder.getImportedRecord()).isEqualTo(0);
+        assertThat(uploadOrder.getNonImportedRecord()).isEqualTo(0);
+    }
+
     private void givenSaveCustomer() {
         customerRepository.save(givenCustomer());
     }
+
 }
