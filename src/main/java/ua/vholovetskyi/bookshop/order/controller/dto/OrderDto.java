@@ -7,8 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import ua.vholovetskyi.bookshop.order.model.OrderStatus;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -24,7 +26,10 @@ public class OrderDto {
     @Size(min = 1, message = "{order.item.min.size}")
     private List<@NotBlank(message = "{order.field.isBlank}") String> items;
     @NotNull(message = "{order.filed.required}")
-    private Long custId;
+    private Long customerId;
     @NotNull(message = "{order.filed.required}")
     private OrderStatus status;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "{order.filed.required}")
+    private LocalDate orderDate;
 }

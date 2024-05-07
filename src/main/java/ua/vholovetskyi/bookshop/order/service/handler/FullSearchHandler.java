@@ -26,7 +26,7 @@ public class FullSearchHandler implements OrderSearchHandler {
     @Override
     public Page<OrderEntity> handle(SearchRequest filter, Pageable pageable) {
         return orderRepository.findAllByCustomerIdAndOrderDateIsBetweenAndStatus(
-                filter.getCustId(),
+                filter.getCustomerId(),
                 filter.getFrom(),
                 filter.getTo(),
                 filter.getStatus(),

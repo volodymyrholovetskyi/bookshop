@@ -26,7 +26,7 @@ public class CustomerService {
 
     @Transactional
     public CustomerEntity createCustomer(CustomerEntity customer) {
-        validateCustomerEmailExists(customer.getEmail());
+        validateCustomerEmailExists(customer);
         return customerRepo.save(customer);
     }
 
@@ -40,25 +40,18 @@ public class CustomerService {
     }
 
     public void deleteById(Long id) {
-        validateCustomerExists(id);
         customerRepo.deleteById(id);
     }
 
-    private void validateCustomerEmailExists(String email) {
-        if (customerRepo.existsByEmail(email)) {
-            throw new EmailAlreadyExistsException(email);
+    private void validateCustomerEmailExists(CustomerEntity customer) {
+        if (customerRepo.existsByEmail(customer.getEmail())) {
+            throw new EmailAlreadyExistsException(customer.getEmail());
         }
     }
 
     private void validateCustomerEmailExists(CustomerEntity loadCustomer, CustomerEntity customer) {
         if (customerRepo.existsByEmail(customer.getEmail()) && !loadCustomer.equalEmails(customer.getEmail())) {
             throw new EmailAlreadyExistsException(customer.getEmail());
-        }
-    }
-
-    private void validateCustomerExists(Long id) {
-        if (customerRepo.findById(id).isEmpty()) {
-            throw new CustomerNotFoundException(id);
         }
     }
 }

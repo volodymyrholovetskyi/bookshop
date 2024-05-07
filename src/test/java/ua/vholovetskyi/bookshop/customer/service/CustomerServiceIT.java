@@ -133,17 +133,6 @@ class CustomerServiceIT extends CustomerBuilder {
         assertThat(deletedCustomer.isEmpty()).isTrue();
     }
 
-    @Test
-    void should_throws_exception_when_delete_customer_if_customer_dos_not_exists() {
-        //given
-        //when
-        var customerNotFound = assertThrows(CustomerNotFoundException.class,
-                () -> customerService.deleteById(1L));
-
-        //then
-        assertThat(customerNotFound.getMessage()).isEqualTo(CUSTOMER_NOT_FOUND_MESSES);
-    }
-
     private CustomerEntity givenSaveCustomer() {
         return customerRepository.save(givenCustomer());
     }

@@ -24,6 +24,6 @@ public class CustIDSearchHandler implements OrderSearchHandler {
 
     @Override
     public Page<OrderEntity> handle(SearchRequest filter, Pageable pageable) {
-        return orderRepository.findAllByCustomerId(filter.getCustId(), pageable);
+        return orderRepository.findAllByCustomerId(filter.getCustomerId(), pageable);
     }
 }

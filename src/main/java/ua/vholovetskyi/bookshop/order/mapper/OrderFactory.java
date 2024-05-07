@@ -17,16 +17,17 @@ public class OrderFactory {
 
     public static OrderEntity createNewOrder(OrderDto orderDto) {
         return OrderEntity.builder()
-                .customerId(orderDto.getCustId())
+                .customerId(orderDto.getCustomerId())
                 .items(orderDto.getItems())
                 .status(orderDto.getStatus())
+                .orderDate(orderDto.getOrderDate())
                 .build();
     }
 
     public static OrderEntity createNewOrder(Long id, OrderDto orderDto) {
         return OrderEntity.builder()
                 .id(id)
-                .customerId(orderDto.getCustId())
+                .customerId(orderDto.getCustomerId())
                 .items(orderDto.getItems())
                 .status(orderDto.getStatus())
                 .build();

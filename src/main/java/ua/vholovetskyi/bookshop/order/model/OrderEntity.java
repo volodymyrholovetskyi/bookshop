@@ -42,8 +42,22 @@ public class OrderEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(length = 70, nullable = false)
     private OrderStatus status;
-    @Builder.Default
     @Column(nullable = false)
-    private LocalDate orderDate = LocalDate.now();
+    private LocalDate orderDate;
+
+    public void updateFields(OrderDto orderDto) {
+        if (orderDto.getItems() != null && orderDto.getItems().size() > 0){
+            this.items = orderDto.getItems();
+        }
+        if (customerId != null) {
+            this.customerId = orderDto.getCustomerId();
+        }
+        if (orderDto.getStatus() != null) {
+            this.status = orderDto.getStatus();
+        }
+        if (orderDto.getOrderDate() != null){
+            this.orderDate = orderDto.getOrderDate();
+        }
+    }
 }
 

@@ -14,6 +14,7 @@ import ua.vholovetskyi.bookshop.data.OrderBuilder;
 import ua.vholovetskyi.bookshop.order.controller.dto.OrderDto;
 import ua.vholovetskyi.bookshop.order.controller.dto.OrderSearchRequest;
 import ua.vholovetskyi.bookshop.order.controller.dto.SearchRequest;
+import ua.vholovetskyi.bookshop.order.service.ExportOrderService;
 import ua.vholovetskyi.bookshop.order.service.OrderService;
 import ua.vholovetskyi.bookshop.order.service.QueryOrderService;
 import ua.vholovetskyi.bookshop.order.service.UploadOrderService;
@@ -38,6 +39,8 @@ public class OrderControllerWebTest extends OrderBuilder {
     private QueryOrderService queryOrderService;
     @MockBean
     private UploadOrderService uploadOrderService;
+    @MockBean
+    private ExportOrderService exportService;
 
     @Autowired
     private ObjectMapper mapper;
@@ -45,7 +48,7 @@ public class OrderControllerWebTest extends OrderBuilder {
     @Test
     void shouldFindOrderById() throws Exception {
         //given
-        var order = givenOrderDetails();
+        var order = givenOrder();
         when(queryOrderService.findOrderById(any(Long.class))).thenReturn(order);
 
         //expect
@@ -60,7 +63,7 @@ public class OrderControllerWebTest extends OrderBuilder {
     void shouldFindAllOrders() throws Exception {
         //given
         var order = givenOrderSearchResponse();
-        var orderDto = givenOrderPaginationDto();
+        var orderDto = givenOrderSearch();
         when(queryOrderService.findOrders(any(OrderSearchRequest.class))).thenReturn(order);
 
         //expect
@@ -108,7 +111,7 @@ public class OrderControllerWebTest extends OrderBuilder {
     @Test
     void shouldUpdateOrder() throws Exception {
         //given
-        var updateOrder = givenUpdateOrderDto();
+        var updateOrder = givenUpdateOrder();
 
         //expect
         mockMvc.perform(put("/api/orders/1")
@@ -119,11 +122,11 @@ public class OrderControllerWebTest extends OrderBuilder {
     }
 
     @Test
-    void shouldReportOrder() throws Exception {
+    void shouldExportOrder() throws Exception {
         //given
         var order = givenSearchRequest();
         var pageOrder = givenOrderList();
-        when(queryOrderService.findOrdersReport(any(SearchRequest.class)))
+        when(exportService.exportOrders(any(SearchRequest.class)))
                 .thenReturn(pageOrder);
 
         //expect

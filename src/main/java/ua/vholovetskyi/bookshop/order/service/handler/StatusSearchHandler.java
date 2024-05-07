@@ -26,7 +26,7 @@ public class StatusSearchHandler implements OrderSearchHandler {
     @Override
     public Page<OrderEntity> handle(SearchRequest filter, Pageable pageable) {
         return orderRepository.findAllByCustomerIdAndStatus(
-                filter.getCustId(),
+                filter.getCustomerId(),
                 filter.getStatus(),
                 pageable);
     }

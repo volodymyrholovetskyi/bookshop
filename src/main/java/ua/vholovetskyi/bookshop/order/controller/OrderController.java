@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import ua.vholovetskyi.bookshop.order.controller.dto.*;
 import ua.vholovetskyi.bookshop.commons.exception.impl.order.ReportOrderException;
 import ua.vholovetskyi.bookshop.commons.exception.impl.order.UploadOrderException;
+import ua.vholovetskyi.bookshop.order.model.OrderEntity;
+import ua.vholovetskyi.bookshop.order.service.ExportOrderService;
 import ua.vholovetskyi.bookshop.order.service.OrderService;
 import ua.vholovetskyi.bookshop.order.service.QueryOrderService;
 import ua.vholovetskyi.bookshop.order.service.UploadOrderService;
@@ -45,6 +47,7 @@ public class OrderController {
     private final OrderService orderService;
     private final UploadOrderService uploadOrderService;
     private final QueryOrderService queryOrderService;
+    private final ExportOrderService exportOrder;
 
     @PostMapping("/_list")
     public OrderSearchResponse findOrders(@RequestBody @Valid OrderSearchRequest searchRequest) {
@@ -52,7 +55,7 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public OrderDetails findOrderById(@PathVariable Long id) {
+    public OrderEntity findOrderById(@PathVariable Long id) {
         return queryOrderService.findOrderById(id);
     }
 
@@ -64,12 +67,12 @@ public class OrderController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void updateOrder(@PathVariable Long id, @RequestBody @Valid OrderDto orderDto) {
-        orderService.updateOrder(id, orderDto);
+    public OrderEntity updateOrder(@PathVariable Long id, @RequestBody @Valid OrderDto orderDto) {
+        return orderService.updateOrder(id, orderDto);
     }
 
     @PostMapping(value = "/upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public UploadOrder uploadOrders(@RequestParam("file") MultipartFile file) {
+    public UploadOrderResponse uploadOrders(@RequestParam("file") MultipartFile file) {
         try (InputStream inputStream = file.getInputStream()) {
             return uploadOrderService.uploadOrders(file.getOriginalFilename(), inputStream);
         } catch (IOException e) {
@@ -78,8 +81,8 @@ public class OrderController {
     }
 
     @PostMapping("/_report")
-    public ResponseEntity<Resource> reportOrders(@RequestBody @Valid SearchRequest searchRequest) {
-        var orders = queryOrderService.findOrdersReport(searchRequest);
+    public ResponseEntity<Resource> exportOrders(@RequestBody @Valid SearchRequest searchRequest) {
+        var orders = exportOrder.exportOrders(searchRequest);
         ByteArrayInputStream stream = transformToCsv(orders);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "reportOrder.csv")

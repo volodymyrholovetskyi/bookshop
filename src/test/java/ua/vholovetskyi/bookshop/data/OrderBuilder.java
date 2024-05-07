@@ -1,9 +1,6 @@
 package ua.vholovetskyi.bookshop.data;
 
 import org.junit.jupiter.params.provider.Arguments;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import ua.vholovetskyi.bookshop.customer.model.CustomerEntity;
 import ua.vholovetskyi.bookshop.order.controller.dto.*;
 import ua.vholovetskyi.bookshop.order.model.OrderEntity;
@@ -21,20 +18,14 @@ public abstract class OrderBuilder {
 
     protected OrderDto givenOrderDto() {
         return OrderDto.builder()
-                .custId(1L)
+                .customerId(1L)
                 .items(List.of(
                         "Effective Java",
                         "Concurrency Java"
                 ))
                 .status(OrderStatus.NEW)
+                .orderDate(LocalDate.of(2024, 4, 20))
                 .build();
-    }
-
-    protected Page<OrderEntity> givenPageOrder() {
-        return new PageImpl<OrderEntity>(
-                givenOrders(),
-                PageRequest.of(0, 4),
-                4);
     }
 
     protected OrderEntity givenOrder() {
@@ -48,13 +39,14 @@ public abstract class OrderBuilder {
                 .build();
     }
 
-    protected OrderDto givenUpdateOrderDto() {
+    protected OrderDto givenUpdateOrder() {
         var items = new ArrayList<String>();
         items.add("Java Database");
         return OrderDto.builder()
-                .custId(1L)
+                .customerId(1L)
                 .items(items)
                 .status(OrderStatus.PAID)
+                .orderDate(LocalDate.of(2024, 5, 21))
                 .build();
     }
 
@@ -90,7 +82,7 @@ public abstract class OrderBuilder {
         );
     }
 
-    protected OrderSearchRequest givenOrderPaginationDto() {
+    protected OrderSearchRequest givenOrderSearch() {
         return OrderSearchRequest.builder()
                 .search(givenSearchRequest())
                 .pageNumber(0)
@@ -98,41 +90,41 @@ public abstract class OrderBuilder {
                 .build();
     }
 
-    protected OrderSearchRequest givenOrderPaginationByCustIdDto() {
+    protected OrderSearchRequest givenOrderSearchByCustIdDto() {
         return OrderSearchRequest.builder()
-                .search(givenOrderSearchCustIdDto())
+                .search(givenOrderSearchCustId())
                 .pageNumber(0)
                 .size(5)
                 .build();
     }
 
-    protected OrderSearchRequest givenOrderPaginationWithCustId3() {
+    protected OrderSearchRequest givenOrderSearchWithCustId3() {
         return OrderSearchRequest.builder()
-                .search(givenOrderFilteringWithCustId3())
+                .search(givenOrderRequestWithCustId3())
                 .pageNumber(0)
                 .size(5)
                 .build();
     }
 
-    protected OrderSearchRequest givenOrderPaginationByCustIdAndStatusDto() {
+    protected OrderSearchRequest givenOrderSearchByCustIdAndStatusDto() {
         return OrderSearchRequest.builder()
-                .search(givenOrderFilteringByCustIdAndStatusDto())
+                .search(givenOrderRequestByCustIdAndStatus())
                 .pageNumber(0)
                 .size(5)
                 .build();
     }
 
-    protected OrderSearchRequest givenOrderPaginationByCustIdAndOrderDateDto() {
+    protected OrderSearchRequest givenOrderSearchByCustIdAndOrderDateDto() {
         return OrderSearchRequest.builder()
-                .search(givenOrderFilteringByCustIdAndOrderDateDto())
+                .search(givenOrderRequestByCustIdAndOrderDate())
                 .pageNumber(0)
                 .size(5)
                 .build();
     }
 
-    protected OrderSearchRequest givenOrderPaginationByCustIdAndStatusAndOrderDateDto() {
+    protected OrderSearchRequest givenOrderSearchByCustIdAndStatusAndOrderDateDto() {
         return OrderSearchRequest.builder()
-                .search(givenOrderFilteringByCustIdAndStatusAndOrderDateDto())
+                .search(givenOrderRequestByCustIdAndStatusAndOrderDate())
                 .pageNumber(0)
                 .size(5)
                 .build();
@@ -140,43 +132,43 @@ public abstract class OrderBuilder {
 
     protected SearchRequest givenSearchRequest() {
         return SearchRequest.builder()
-                .custId(1L)
+                .customerId(1L)
                 .status(OrderStatus.NEW)
                 .from(LocalDate.of(2024, 4, 1))
-                .to(LocalDate.of(2024, 5, 1))
+                .to(LocalDate.of(2024, 6, 1))
                 .build();
     }
 
-    protected SearchRequest givenOrderSearchCustIdDto() {
+    protected SearchRequest givenOrderSearchCustId() {
         return SearchRequest.builder()
-                .custId(1L)
+                .customerId(1L)
                 .build();
     }
 
-    protected SearchRequest givenOrderFilteringWithCustId3() {
+    protected SearchRequest givenOrderRequestWithCustId3() {
         return SearchRequest.builder()
-                .custId(3L)
+                .customerId(3L)
                 .build();
     }
 
-    protected SearchRequest givenOrderFilteringByCustIdAndStatusDto() {
+    protected SearchRequest givenOrderRequestByCustIdAndStatus() {
         return SearchRequest.builder()
-                .custId(1L)
+                .customerId(1L)
                 .status(OrderStatus.NEW)
                 .build();
     }
 
-    protected SearchRequest givenOrderFilteringByCustIdAndOrderDateDto() {
+    protected SearchRequest givenOrderRequestByCustIdAndOrderDate() {
         return SearchRequest.builder()
-                .custId(1L)
+                .customerId(1L)
                 .from(LocalDate.of(2024, 5, 10))
                 .to(LocalDate.of(2024, 5, 15))
                 .build();
     }
 
-    protected SearchRequest givenOrderFilteringByCustIdAndStatusAndOrderDateDto() {
+    protected SearchRequest givenOrderRequestByCustIdAndStatusAndOrderDate() {
         return SearchRequest.builder()
-                .custId(1L)
+                .customerId(1L)
                 .status(OrderStatus.PAID)
                 .from(LocalDate.of(2024, 5, 5))
                 .to(LocalDate.of(2024, 5, 20))
@@ -203,22 +195,10 @@ public abstract class OrderBuilder {
                 .build();
     }
 
-    protected UploadOrder givenUploadOrder() {
-        return UploadOrder.builder()
+    protected UploadOrderResponse givenUploadOrder() {
+        return UploadOrderResponse.builder()
                 .importedRecord(10)
                 .nonImportedRecord(2)
-                .build();
-    }
-
-    protected OrderDetails givenOrderDetails() {
-        return OrderDetails.builder()
-                .custId(1L)
-                .items(List.of(
-                        "Effective Java",
-                        "Concurrency Java"
-                ))
-                .status(OrderStatus.NEW)
-                .orderDate(LocalDate.of(2024, 4, 29))
                 .build();
     }
 
@@ -332,11 +312,11 @@ public abstract class OrderBuilder {
         return Stream.of(
                 Arguments.of(OrderDto.builder()
                         .items(List.of(" ", "  "))
-                        .custId(1L)
+                        .customerId(1L)
                         .build()),
                 Arguments.of(OrderDto.builder()
                         .items(null)
-                        .custId(null)
+                        .customerId(null)
                         .build()
                 ),
                 Arguments.of(OrderDto.builder()

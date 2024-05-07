@@ -1,6 +1,5 @@
 package ua.vholovetskyi.bookshop.order.mapper;
 
-import ua.vholovetskyi.bookshop.order.controller.dto.OrderDetails;
 import ua.vholovetskyi.bookshop.order.controller.dto.OrderList;
 import ua.vholovetskyi.bookshop.order.controller.dto.OrderSearchResponse;
 import ua.vholovetskyi.bookshop.order.model.OrderEntity;
@@ -33,16 +32,6 @@ public class OrderDtoMapper {
                 .totalProduct(order.getItems().size())
                 .status(order.getStatus())
                 .orderDate(order.getOrderDate())
-                .build();
-    }
-
-    public static OrderDetails mapToOrderDetailsDto(OrderEntity order) {
-        return OrderDetails.builder()
-                .id(order.getId())
-                .orderDate(order.getOrderDate())
-                .custId(order.getCustomerId())
-                .items(order.getItems())
-                .status(order.getStatus())
                 .build();
     }
 }

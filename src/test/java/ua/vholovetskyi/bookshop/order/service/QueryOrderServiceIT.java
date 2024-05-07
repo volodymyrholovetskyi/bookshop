@@ -41,7 +41,7 @@ class QueryOrderServiceIT extends OrderBuilder {
 
         //then
         assertThat(order.getStatus()).isEqualTo(OrderStatus.NEW);
-        assertThat(order.getCustId()).isEqualTo(1);
+        assertThat(order.getCustomerId()).isEqualTo(1);
         assertThat(order.getItems().size()).isEqualTo(2);
     }
 
@@ -60,7 +60,7 @@ class QueryOrderServiceIT extends OrderBuilder {
     void shouldFindAllOrders_byCustomerId() {
         //given
         givenSaveOrders();
-        var orderDto = givenOrderPaginationByCustIdDto();
+        var orderDto = givenOrderSearchByCustIdDto();
 
         //when
         var orders = orderService.findOrders(orderDto);
@@ -74,7 +74,7 @@ class QueryOrderServiceIT extends OrderBuilder {
     void shouldFindAllOrders_byCustomerIdAndStatus() {
         //given
         givenSaveOrders();
-        var orderDto = givenOrderPaginationByCustIdAndStatusDto();
+        var orderDto = givenOrderSearchByCustIdAndStatusDto();
 
         //when
         var orders = orderService.findOrders(orderDto);
@@ -88,7 +88,7 @@ class QueryOrderServiceIT extends OrderBuilder {
     void shouldFindAllOrders_byCustomerIdAndOrderDate() {
         //given
         givenSaveOrders();
-        var orderDto = givenOrderPaginationByCustIdAndOrderDateDto();
+        var orderDto = givenOrderSearchByCustIdAndOrderDateDto();
 
         //when
         var orders = orderService.findOrders(orderDto);
@@ -102,7 +102,7 @@ class QueryOrderServiceIT extends OrderBuilder {
     void shouldFindAllOrders_byCustomerIdAndStatusAndOrderDate() {
         //given
         givenSaveOrders();
-        var orderDto = givenOrderPaginationByCustIdAndStatusAndOrderDateDto();
+        var orderDto = givenOrderSearchByCustIdAndStatusAndOrderDateDto();
 
         //when
         var orders = orderService.findOrders(orderDto);
@@ -116,7 +116,7 @@ class QueryOrderServiceIT extends OrderBuilder {
     void shouldReturnEmptyList_ifCustomerNotFound() {
         //given
         givenSaveOrders();
-        var orderDto = givenOrderPaginationWithCustId3();
+        var orderDto = givenOrderSearchWithCustId3();
 
         //when
         var emptyList = orderService.findOrders(orderDto);

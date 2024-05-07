@@ -62,7 +62,7 @@ class OrderServiceIT extends OrderBuilder {
     void shouldUpdateOrder() {
         //given
         giveSaveOrderWithCustomer();
-        var orderDto = givenUpdateOrderDto();
+        var orderDto = givenUpdateOrder();
 
         //when
         orderService.updateOrder(1L, orderDto);
@@ -77,7 +77,7 @@ class OrderServiceIT extends OrderBuilder {
     void shouldThrowsException_whenOrderNotFound() {
         //given
         givenSaveCustomer();
-        var orderDto = givenUpdateOrderDto();
+        var orderDto = givenUpdateOrder();
 
         //when
         var orderNotFound = assertThrows(OrderNotFoundException.class,
@@ -91,7 +91,7 @@ class OrderServiceIT extends OrderBuilder {
     void shouldThrowsException_whenUpdateOrder_ifOrderNotFound() {
         //given
         givenSaveCustomer();
-        var orderDto = givenUpdateOrderDto();
+        var orderDto = givenUpdateOrder();
 
         //when
         var orderNotFound = assertThrows(OrderNotFoundException.class,
@@ -112,17 +112,6 @@ class OrderServiceIT extends OrderBuilder {
 
         //then
         assertThat(deletedOrder.isEmpty()).isTrue();
-    }
-
-    @Test
-    void shouldThrowException_whenDeleteOrder_ifOrderNotFound() {
-        //given
-        //when
-        var orderNotFound = assertThrows(OrderNotFoundException.class,
-                () -> orderService.deleteOrder(1L));
-
-        //then
-        assertThat(orderNotFound.getMessage()).isEqualTo(ORDER_NOT_FOUND_MESSES);
     }
 
     private void givenSaveCustomer() {

@@ -21,7 +21,7 @@ import java.time.LocalDate;
 public class SearchRequest {
 
     @NotNull(message = "{order.field.required}")
-    private Long custId;
+    private Long customerId;
     private OrderStatus status;
     private LocalDate from;
     private LocalDate to;

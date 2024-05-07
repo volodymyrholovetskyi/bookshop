@@ -6,11 +6,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ua.vholovetskyi.bookshop.commons.exception.impl.order.UploadOrderException;
 import ua.vholovetskyi.bookshop.customer.model.CustomerEntity;
 import ua.vholovetskyi.bookshop.customer.repository.CustomerRepository;
-import ua.vholovetskyi.bookshop.order.controller.dto.UploadOrder;
+import ua.vholovetskyi.bookshop.order.controller.dto.UploadOrderResponse;
 import ua.vholovetskyi.bookshop.order.model.OrderEntity;
 import ua.vholovetskyi.bookshop.order.validator.OrderJson;
 import ua.vholovetskyi.bookshop.order.validator.OrderJsonValidator;
@@ -38,14 +37,14 @@ public class UploadOrderService {
     private final OrderJsonValidator validator;
     private final BatchOrderService batchOrderService;
 
-    public UploadOrder uploadOrders(String fileName, InputStream inputStream) {
+    public UploadOrderResponse uploadOrders(String fileName, InputStream inputStream) {
         return parseOrders(fileName, inputStream);
     }
 
-    private UploadOrder parseOrders(String fileName, InputStream inputStream) {
+    private UploadOrderResponse parseOrders(String fileName, InputStream inputStream) {
         log.info("Start parse uploaded %s file...".formatted(fileName));
         var orders = new ArrayList<OrderEntity>();
-        var response = new UploadOrder();
+        var response = new UploadOrderResponse();
         try (JsonParser jsonParser = objectMapper.createParser(inputStream)) {
             if (jsonParser.nextToken() == JsonToken.START_ARRAY) {
                 while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
