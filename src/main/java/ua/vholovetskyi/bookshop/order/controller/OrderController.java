@@ -14,11 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.vholovetskyi.bookshop.order.controller.dto.*;
-import ua.vholovetskyi.bookshop.order.exception.ReportOrderException;
-import ua.vholovetskyi.bookshop.order.exception.UploadOrderException;
+import ua.vholovetskyi.bookshop.commons.exception.impl.order.ReportOrderException;
+import ua.vholovetskyi.bookshop.commons.exception.impl.order.UploadOrderException;
 import ua.vholovetskyi.bookshop.order.service.OrderService;
 import ua.vholovetskyi.bookshop.order.service.QueryOrderService;
-import ua.vholovetskyi.bookshop.order.service.ReportOrderService;
 import ua.vholovetskyi.bookshop.order.service.UploadOrderService;
 
 
@@ -46,11 +45,10 @@ public class OrderController {
     private final OrderService orderService;
     private final UploadOrderService uploadOrderService;
     private final QueryOrderService queryOrderService;
-    private final ReportOrderService reportService;
 
     @PostMapping("/_list")
-    public OrderPagination findOrders(@RequestBody @Valid OrderPaginationDto paginationDto) {
-        return queryOrderService.findOrders(paginationDto);
+    public OrderSearchResponse findOrders(@RequestBody @Valid OrderSearchRequest searchRequest) {
+        return queryOrderService.findOrders(searchRequest);
     }
 
     @GetMapping("/{id}")
@@ -80,8 +78,8 @@ public class OrderController {
     }
 
     @PostMapping("/_report")
-    public ResponseEntity<Resource> reportOrders(@RequestBody @Valid OrderFilteringDto filterRequest) {
-        var orders = reportService.reportOrders(filterRequest);
+    public ResponseEntity<Resource> reportOrders(@RequestBody @Valid SearchRequest searchRequest) {
+        var orders = queryOrderService.findOrdersReport(searchRequest);
         ByteArrayInputStream stream = transformToCsv(orders);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "reportOrder.csv")

@@ -15,9 +15,8 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import ua.vholovetskyi.bookshop.commons.exception.ErrorResponse;
-import ua.vholovetskyi.bookshop.customer.dto.CustomerDto;
+import ua.vholovetskyi.bookshop.customer.controller.dto.CustomerDto;
 import ua.vholovetskyi.bookshop.customer.model.CustomerEntity;
-import ua.vholovetskyi.bookshop.customer.repository.CustomerRepository;
 import ua.vholovetskyi.bookshop.customer.service.CustomerService;
 import ua.vholovetskyi.bookshop.data.CustomerBuilder;
 

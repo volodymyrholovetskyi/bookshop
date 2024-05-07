@@ -3,17 +3,18 @@ package ua.vholovetskyi.bookshop.order.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ua.vholovetskyi.bookshop.order.controller.dto.OrderDetails;
-import ua.vholovetskyi.bookshop.order.controller.dto.OrderPagination;
-import ua.vholovetskyi.bookshop.order.controller.dto.OrderPaginationDto;
-import ua.vholovetskyi.bookshop.order.exception.OrderNotFoundException;
+import ua.vholovetskyi.bookshop.order.controller.dto.*;
+import ua.vholovetskyi.bookshop.commons.exception.impl.order.OrderNotFoundException;
 import ua.vholovetskyi.bookshop.order.mapper.OrderDtoMapper;
 import ua.vholovetskyi.bookshop.order.model.OrderEntity;
 import ua.vholovetskyi.bookshop.order.repository.OrderRepository;
+import ua.vholovetskyi.bookshop.order.service.handler.OrderSearchService;
+import java.util.List;
 
-import static ua.vholovetskyi.bookshop.commons.helper.OrderFilterHelper.*;
-import static ua.vholovetskyi.bookshop.order.mapper.OrderDtoMapper.mapToOrderPagination;
+import static ua.vholovetskyi.bookshop.order.mapper.OrderDtoMapper.*;
+
 
 /**
  * @author Volodymyr Holovetskyi
@@ -23,7 +24,10 @@ import static ua.vholovetskyi.bookshop.order.mapper.OrderDtoMapper.mapToOrderPag
 @Service
 @RequiredArgsConstructor
 public class QueryOrderService {
+
+    private static final Pageable EMPTY_PAGEABLE = null;
     private final OrderRepository orderRepository;
+    private final OrderSearchService searchService;
 
     public OrderDetails findOrderById(Long id) {
         return orderRepository.findById(id)
@@ -31,54 +35,20 @@ public class QueryOrderService {
                 .orElseThrow(() -> new OrderNotFoundException(id));
     }
 
-    public OrderPagination findOrders(OrderPaginationDto orderDto) {
-        if (hasOnlyFilteringByCustId(orderDto.getFilter())) {
-            return findAllByCustomerId(orderDto);
-        }
-        if (hasFilteringByCustIdAndStatus(orderDto.getFilter())) {
-            return findAllByCustomerIdAndStatus(orderDto);
-        }
-        if (hasFilteringByCustIdAndOrderDate(orderDto.getFilter())) {
-            return findAllByCustomerIdAndOrderDateIsBetween(orderDto);
-        }
-        return findAllByCustomerIdAndOrderDateAndStatus(orderDto);
+    public OrderSearchResponse findOrders(OrderSearchRequest searchRequest) {
+        var pageOrder = getPageOrder(searchRequest.getSearch(), getPageRequest(searchRequest));
+        return mapToOrderSearch(pageOrder.getContent(), pageOrder.getTotalPages());
     }
 
-    private OrderPagination findAllByCustomerId(OrderPaginationDto orderDto) {
-        var orders = orderRepository.findAllByCustomerId(orderDto.getFilter().getCustId(),
-                getPageRequest(orderDto));
-        return buildResultFilteringOrders(orders);
+    public List<OrderList> findOrdersReport(SearchRequest searchRequest) {
+        return mapToOrderListDto(getPageOrder(searchRequest, EMPTY_PAGEABLE).getContent());
     }
 
-    private OrderPagination findAllByCustomerIdAndStatus(OrderPaginationDto orderDto) {
-        var orders = orderRepository.findAllByCustomerIdAndStatus(orderDto.getFilter().getCustId(),
-                orderDto.getFilter().getStatus(),
-                getPageRequest(orderDto));
-        return buildResultFilteringOrders(orders);
-    }
-
-    private OrderPagination findAllByCustomerIdAndOrderDateIsBetween(OrderPaginationDto orderDto) {
-        var orders = orderRepository.findAllByCustomerIdAndOrderDateIsBetween(orderDto.getFilter().getCustId(),
-                orderDto.getFilter().getFrom(),
-                orderDto.getFilter().getTo(),
-                getPageRequest(orderDto));
-        return buildResultFilteringOrders(orders);
-    }
-
-    private OrderPagination findAllByCustomerIdAndOrderDateAndStatus(OrderPaginationDto orderDto) {
-        var orders = orderRepository.findAllByCustomerIdAndOrderDateIsBetweenAndStatus(orderDto.getFilter().getCustId(),
-                orderDto.getFilter().getFrom(),
-                orderDto.getFilter().getTo(),
-                orderDto.getFilter().getStatus(),
-                getPageRequest(orderDto));
-        return buildResultFilteringOrders(orders);
-    }
-
-    private OrderPagination buildResultFilteringOrders(Page<OrderEntity> orders) {
-        return mapToOrderPagination(orders.getContent(), orders.getTotalPages());
-    }
-
-    private PageRequest getPageRequest(OrderPaginationDto orderRequest) {
+    private PageRequest getPageRequest(OrderSearchRequest orderRequest) {
         return PageRequest.of(orderRequest.getPageNumber(), orderRequest.getSize());
+    }
+
+    private Page<OrderEntity> getPageOrder(SearchRequest searchRequest, Pageable pageable) {
+        return searchService.searchOrders(searchRequest, pageable);
     }
 }

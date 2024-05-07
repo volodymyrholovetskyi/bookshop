@@ -12,15 +12,13 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import ua.vholovetskyi.bookshop.data.OrderBuilder;
 import ua.vholovetskyi.bookshop.order.controller.dto.OrderDto;
-import ua.vholovetskyi.bookshop.order.controller.dto.OrderFilteringDto;
-import ua.vholovetskyi.bookshop.order.controller.dto.OrderPaginationDto;
+import ua.vholovetskyi.bookshop.order.controller.dto.OrderSearchRequest;
+import ua.vholovetskyi.bookshop.order.controller.dto.SearchRequest;
 import ua.vholovetskyi.bookshop.order.service.OrderService;
 import ua.vholovetskyi.bookshop.order.service.QueryOrderService;
-import ua.vholovetskyi.bookshop.order.service.ReportOrderService;
 import ua.vholovetskyi.bookshop.order.service.UploadOrderService;
 
 import java.io.InputStream;
-import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
@@ -39,9 +37,8 @@ public class OrderControllerWebTest extends OrderBuilder {
     @MockBean
     private QueryOrderService queryOrderService;
     @MockBean
-    private ReportOrderService reportOrderService;
-    @MockBean
     private UploadOrderService uploadOrderService;
+
     @Autowired
     private ObjectMapper mapper;
 
@@ -62,9 +59,9 @@ public class OrderControllerWebTest extends OrderBuilder {
     @Test
     void shouldFindAllOrders() throws Exception {
         //given
-        var orders = givenOrderPagination();
+        var order = givenOrderSearchResponse();
         var orderDto = givenOrderPaginationDto();
-        when(queryOrderService.findOrders(any(OrderPaginationDto.class))).thenReturn(orders);
+        when(queryOrderService.findOrders(any(OrderSearchRequest.class))).thenReturn(order);
 
         //expect
         mockMvc.perform(post("/api/orders/_list")
@@ -120,11 +117,14 @@ public class OrderControllerWebTest extends OrderBuilder {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isAccepted());
     }
+
     @Test
     void shouldReportOrder() throws Exception {
         //given
-        var order = givenOrderFilteringDto();
-        when(reportOrderService.reportOrders(any(OrderFilteringDto.class))).thenReturn(List.of());
+        var order = givenSearchRequest();
+        var pageOrder = givenOrderList();
+        when(queryOrderService.findOrdersReport(any(SearchRequest.class)))
+                .thenReturn(pageOrder);
 
         //expect
         mockMvc.perform(post("/api/orders/_report")

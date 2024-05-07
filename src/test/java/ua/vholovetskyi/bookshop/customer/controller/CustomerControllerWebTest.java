@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import ua.vholovetskyi.bookshop.customer.dto.CustomerDto;
+import ua.vholovetskyi.bookshop.customer.controller.dto.CustomerDto;
 import ua.vholovetskyi.bookshop.customer.model.CustomerEntity;
 import ua.vholovetskyi.bookshop.customer.service.CustomerService;
 import ua.vholovetskyi.bookshop.data.CustomerBuilder;

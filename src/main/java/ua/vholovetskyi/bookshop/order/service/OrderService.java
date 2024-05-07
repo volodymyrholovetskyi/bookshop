@@ -3,14 +3,11 @@ package ua.vholovetskyi.bookshop.order.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.vholovetskyi.bookshop.customer.exception.CustomerNotFoundException;
+import ua.vholovetskyi.bookshop.commons.exception.impl.customer.CustomerNotFoundException;
 import ua.vholovetskyi.bookshop.customer.repository.CustomerRepository;
 import ua.vholovetskyi.bookshop.order.controller.dto.OrderDto;
 import ua.vholovetskyi.bookshop.order.controller.dto.OrderSummary;
-import ua.vholovetskyi.bookshop.order.exception.OrderNotFoundException;
-import ua.vholovetskyi.bookshop.order.mapper.OrderDtoMapper;
-import ua.vholovetskyi.bookshop.order.mapper.OrderFactory;
-import ua.vholovetskyi.bookshop.order.model.OrderEntity;
+import ua.vholovetskyi.bookshop.commons.exception.impl.order.OrderNotFoundException;
 import ua.vholovetskyi.bookshop.order.repository.OrderRepository;
 
 import static ua.vholovetskyi.bookshop.order.mapper.OrderFactory.createNewOrder;

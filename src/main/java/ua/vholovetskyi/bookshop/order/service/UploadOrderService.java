@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.vholovetskyi.bookshop.customer.model.CustomerEntity;
 import ua.vholovetskyi.bookshop.customer.repository.CustomerRepository;
 import ua.vholovetskyi.bookshop.order.controller.dto.UploadOrder;
-import ua.vholovetskyi.bookshop.order.exception.UploadOrderException;
+import ua.vholovetskyi.bookshop.commons.exception.impl.order.UploadOrderException;
 import ua.vholovetskyi.bookshop.order.model.OrderEntity;
 import ua.vholovetskyi.bookshop.order.validator.OrderJson;
 import ua.vholovetskyi.bookshop.order.validator.OrderJsonValidator;

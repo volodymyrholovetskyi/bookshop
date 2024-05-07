@@ -21,7 +21,6 @@ import ua.vholovetskyi.bookshop.order.controller.dto.*;
 import ua.vholovetskyi.bookshop.order.model.OrderStatus;
 import ua.vholovetskyi.bookshop.order.service.OrderService;
 import ua.vholovetskyi.bookshop.order.service.QueryOrderService;
-import ua.vholovetskyi.bookshop.order.service.ReportOrderService;
 import ua.vholovetskyi.bookshop.order.service.UploadOrderService;
 
 import java.io.InputStream;
@@ -42,30 +41,27 @@ public class OrderControllerApiTest extends OrderBuilder {
     @MockBean
     private QueryOrderService queryOrderService;
     @MockBean
-    private ReportOrderService reportOrderService;
-    @MockBean
     private UploadOrderService uploadOrderService;
     @Autowired
     private TestRestTemplate restTemplate;
 
     @Test
-    void shouldFindAllOrders() {
+    void shouldFindOrders() {
         //given
         var baseUrl = givenBaseUrl();
         var orderDto = givenOrderPaginationDto();
-        var order = givenOrderPagination();
+        var order = givenOrderSearchResponse();
 
         //when
-        when(queryOrderService.findOrders(any(OrderPaginationDto.class))).thenReturn(order);
+        when(queryOrderService.findOrders(any(OrderSearchRequest.class))).thenReturn(order);
         RequestEntity<?> request = RequestEntity.post(URI.create(baseUrl + "/_list")).body(orderDto);
-        ResponseEntity<OrderPagination> result = restTemplate.exchange(request, OrderPagination.class);
+        ResponseEntity<OrderSearchResponse> result = restTemplate.exchange(request, OrderSearchResponse.class);
 
         //then
         assertThat(result.getStatusCode().value()).isEqualTo(200);
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(result.getBody().getList()).size().isEqualTo(2);
-        assertThat(result.getBody().getTotalPage()).isEqualTo(5);
-        verify(queryOrderService, times(1)).findOrders(any(OrderPaginationDto.class));
+        verify(queryOrderService, times(1)).findOrders(any(OrderSearchRequest.class));
     }
 
     @Test
@@ -107,18 +103,18 @@ public class OrderControllerApiTest extends OrderBuilder {
     void shouldReportOrder() {
         //given
         var baseUrl = givenBaseUrl() + "/_report";
-        var orderDto = givenOrderFilteringByCustIdDto();
-        var orderList = givenOrderList();
+        var orderDto = givenOrderSearchCustIdDto();
+        var orders = givenOrderList();
 
         //when
-        when(reportOrderService.reportOrders(any(OrderFilteringDto.class))).thenReturn(orderList);
+        when(queryOrderService.findOrdersReport(any(SearchRequest.class))).thenReturn(orders);
         RequestEntity<?> request = RequestEntity.post(URI.create(baseUrl)).body(orderDto);
         ResponseEntity<Resource> result = restTemplate.exchange(request, Resource.class);
 
         //then
         assertThat(result.getStatusCode().value()).isEqualTo(200);
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
-        verify(reportOrderService, times(1)).reportOrders(any(OrderFilteringDto.class));
+        verify(queryOrderService, times(1)).findOrdersReport(any(SearchRequest.class));
     }
 
     @Test

@@ -8,9 +8,10 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import ua.vholovetskyi.bookshop.customer.repository.CustomerRepository;
 import ua.vholovetskyi.bookshop.data.OrderBuilder;
-import ua.vholovetskyi.bookshop.order.exception.OrderNotFoundException;
+import ua.vholovetskyi.bookshop.commons.exception.impl.order.OrderNotFoundException;
 import ua.vholovetskyi.bookshop.order.model.OrderStatus;
 import ua.vholovetskyi.bookshop.order.repository.OrderRepository;
+import ua.vholovetskyi.bookshop.order.service.handler.OrderSearchService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -18,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DataJpaTest
 @ActiveProfiles("test")
-@Import(value = {QueryOrderService.class})
+@Import(value = {QueryOrderService.class, OrderSearchService.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class QueryOrderServiceIT extends OrderBuilder {
 

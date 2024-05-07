@@ -6,11 +6,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import ua.vholovetskyi.bookshop.customer.exception.CustomerNotFoundException;
+import ua.vholovetskyi.bookshop.commons.exception.impl.customer.CustomerNotFoundException;
 import ua.vholovetskyi.bookshop.customer.repository.CustomerRepository;
 import ua.vholovetskyi.bookshop.data.OrderBuilder;
 import ua.vholovetskyi.bookshop.order.controller.dto.OrderSummary;
-import ua.vholovetskyi.bookshop.order.exception.OrderNotFoundException;
+import ua.vholovetskyi.bookshop.commons.exception.impl.order.OrderNotFoundException;
 import ua.vholovetskyi.bookshop.order.model.OrderStatus;
 import ua.vholovetskyi.bookshop.order.repository.OrderRepository;
 

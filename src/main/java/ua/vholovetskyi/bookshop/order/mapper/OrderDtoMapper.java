@@ -2,7 +2,7 @@ package ua.vholovetskyi.bookshop.order.mapper;
 
 import ua.vholovetskyi.bookshop.order.controller.dto.OrderDetails;
 import ua.vholovetskyi.bookshop.order.controller.dto.OrderList;
-import ua.vholovetskyi.bookshop.order.controller.dto.OrderPagination;
+import ua.vholovetskyi.bookshop.order.controller.dto.OrderSearchResponse;
 import ua.vholovetskyi.bookshop.order.model.OrderEntity;
 
 import java.util.List;
@@ -14,8 +14,8 @@ import java.util.List;
  */
 public class OrderDtoMapper {
 
-    public static OrderPagination mapToOrderPagination(List<OrderEntity> orders, int totalPage) {
-        return OrderPagination.builder()
+    public static OrderSearchResponse mapToOrderSearch(List<OrderEntity> orders, int totalPage) {
+        return OrderSearchResponse.builder()
                 .list(mapToOrderListDto(orders))
                 .totalPage(totalPage)
                 .build();

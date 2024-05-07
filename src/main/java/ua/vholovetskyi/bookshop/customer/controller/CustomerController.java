@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ua.vholovetskyi.bookshop.customer.dto.CustomerDto;
+import ua.vholovetskyi.bookshop.customer.controller.dto.CustomerDto;
 import ua.vholovetskyi.bookshop.customer.model.CustomerEntity;
 import ua.vholovetskyi.bookshop.customer.service.CustomerService;
 

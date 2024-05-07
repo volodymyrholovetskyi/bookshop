@@ -1,6 +1,9 @@
 package ua.vholovetskyi.bookshop.data;
 
 import org.junit.jupiter.params.provider.Arguments;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import ua.vholovetskyi.bookshop.customer.model.CustomerEntity;
 import ua.vholovetskyi.bookshop.order.controller.dto.*;
 import ua.vholovetskyi.bookshop.order.model.OrderEntity;
@@ -25,6 +28,13 @@ public abstract class OrderBuilder {
                 ))
                 .status(OrderStatus.NEW)
                 .build();
+    }
+
+    protected Page<OrderEntity> givenPageOrder() {
+        return new PageImpl<OrderEntity>(
+                givenOrders(),
+                PageRequest.of(0, 4),
+                4);
     }
 
     protected OrderEntity givenOrder() {
@@ -80,56 +90,56 @@ public abstract class OrderBuilder {
         );
     }
 
-    protected OrderPaginationDto givenOrderPaginationDto() {
-        return OrderPaginationDto.builder()
-                .filter(givenOrderFilteringDto())
+    protected OrderSearchRequest givenOrderPaginationDto() {
+        return OrderSearchRequest.builder()
+                .search(givenSearchRequest())
                 .pageNumber(0)
                 .size(4)
                 .build();
     }
 
-    protected OrderPaginationDto givenOrderPaginationByCustIdDto() {
-        return OrderPaginationDto.builder()
-                .filter(givenOrderFilteringByCustIdDto())
+    protected OrderSearchRequest givenOrderPaginationByCustIdDto() {
+        return OrderSearchRequest.builder()
+                .search(givenOrderSearchCustIdDto())
                 .pageNumber(0)
                 .size(5)
                 .build();
     }
 
-    protected OrderPaginationDto givenOrderPaginationWithCustId3() {
-        return OrderPaginationDto.builder()
-                .filter(givenOrderFilteringWithCustId3())
+    protected OrderSearchRequest givenOrderPaginationWithCustId3() {
+        return OrderSearchRequest.builder()
+                .search(givenOrderFilteringWithCustId3())
                 .pageNumber(0)
                 .size(5)
                 .build();
     }
 
-    protected OrderPaginationDto givenOrderPaginationByCustIdAndStatusDto() {
-        return OrderPaginationDto.builder()
-                .filter(givenOrderFilteringByCustIdAndStatusDto())
+    protected OrderSearchRequest givenOrderPaginationByCustIdAndStatusDto() {
+        return OrderSearchRequest.builder()
+                .search(givenOrderFilteringByCustIdAndStatusDto())
                 .pageNumber(0)
                 .size(5)
                 .build();
     }
 
-    protected OrderPaginationDto givenOrderPaginationByCustIdAndOrderDateDto() {
-        return OrderPaginationDto.builder()
-                .filter(givenOrderFilteringByCustIdAndOrderDateDto())
+    protected OrderSearchRequest givenOrderPaginationByCustIdAndOrderDateDto() {
+        return OrderSearchRequest.builder()
+                .search(givenOrderFilteringByCustIdAndOrderDateDto())
                 .pageNumber(0)
                 .size(5)
                 .build();
     }
 
-    protected OrderPaginationDto givenOrderPaginationByCustIdAndStatusAndOrderDateDto() {
-        return OrderPaginationDto.builder()
-                .filter(givenOrderFilteringByCustIdAndStatusAndOrderDateDto())
+    protected OrderSearchRequest givenOrderPaginationByCustIdAndStatusAndOrderDateDto() {
+        return OrderSearchRequest.builder()
+                .search(givenOrderFilteringByCustIdAndStatusAndOrderDateDto())
                 .pageNumber(0)
                 .size(5)
                 .build();
     }
 
-    protected OrderFilteringDto givenOrderFilteringDto() {
-        return OrderFilteringDto.builder()
+    protected SearchRequest givenSearchRequest() {
+        return SearchRequest.builder()
                 .custId(1L)
                 .status(OrderStatus.NEW)
                 .from(LocalDate.of(2024, 4, 1))
@@ -137,35 +147,35 @@ public abstract class OrderBuilder {
                 .build();
     }
 
-    protected OrderFilteringDto givenOrderFilteringByCustIdDto() {
-        return OrderFilteringDto.builder()
+    protected SearchRequest givenOrderSearchCustIdDto() {
+        return SearchRequest.builder()
                 .custId(1L)
                 .build();
     }
 
-    protected OrderFilteringDto givenOrderFilteringWithCustId3() {
-        return OrderFilteringDto.builder()
+    protected SearchRequest givenOrderFilteringWithCustId3() {
+        return SearchRequest.builder()
                 .custId(3L)
                 .build();
     }
 
-    protected OrderFilteringDto givenOrderFilteringByCustIdAndStatusDto() {
-        return OrderFilteringDto.builder()
+    protected SearchRequest givenOrderFilteringByCustIdAndStatusDto() {
+        return SearchRequest.builder()
                 .custId(1L)
                 .status(OrderStatus.NEW)
                 .build();
     }
 
-    protected OrderFilteringDto givenOrderFilteringByCustIdAndOrderDateDto() {
-        return OrderFilteringDto.builder()
+    protected SearchRequest givenOrderFilteringByCustIdAndOrderDateDto() {
+        return SearchRequest.builder()
                 .custId(1L)
                 .from(LocalDate.of(2024, 5, 10))
                 .to(LocalDate.of(2024, 5, 15))
                 .build();
     }
 
-    protected OrderFilteringDto givenOrderFilteringByCustIdAndStatusAndOrderDateDto() {
-        return OrderFilteringDto.builder()
+    protected SearchRequest givenOrderFilteringByCustIdAndStatusAndOrderDateDto() {
+        return SearchRequest.builder()
                 .custId(1L)
                 .status(OrderStatus.PAID)
                 .from(LocalDate.of(2024, 5, 5))
@@ -173,8 +183,8 @@ public abstract class OrderBuilder {
                 .build();
     }
 
-    protected OrderPagination givenOrderPagination() {
-        return OrderPagination.builder()
+    protected OrderSearchResponse givenOrderSearchResponse() {
+        return OrderSearchResponse.builder()
                 .list(List.of(
                         OrderList.builder()
                                 .id(1L)
