@@ -2,6 +2,7 @@ package ua.vholovetskyi.bookshop.order.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ua.vholovetskyi.bookshop.order.controller.dto.OrderFilteringDto;
 import ua.vholovetskyi.bookshop.order.controller.dto.OrderList;
@@ -22,6 +23,8 @@ import static ua.vholovetskyi.bookshop.order.mapper.OrderDtoMapper.mapToOrderLis
 @RequiredArgsConstructor
 @Slf4j
 public class ReportOrderService {
+
+    private static final Pageable EMPTY_PAGEABLE = null;
     private final OrderRepository orderRepository;
 
     public List<OrderList> reportOrders(OrderFilteringDto filterDto) {
@@ -38,25 +41,33 @@ public class ReportOrderService {
     }
 
     private List<OrderEntity> findAllByCustomerId(OrderFilteringDto filter) {
-        return orderRepository.findAllByCustomerId(filter.getCustId());
+        return orderRepository.findAllByCustomerId(filter.getCustId(),
+                EMPTY_PAGEABLE)
+                .getContent();
     }
 
     private List<OrderEntity> findAllByCustomerIdAndStatus(OrderFilteringDto filter) {
         return orderRepository.findAllByCustomerIdAndStatus(filter.getCustId(),
-                filter.getStatus());
+                filter.getStatus(),
+                EMPTY_PAGEABLE)
+                .getContent();
 
     }
 
     private List<OrderEntity> findAllByCustomerIdAndOrderDateIsBetween(OrderFilteringDto filter) {
         return orderRepository.findAllByCustomerIdAndOrderDateIsBetween(filter.getCustId(),
                 filter.getFrom(),
-                filter.getTo());
+                filter.getTo(),
+                EMPTY_PAGEABLE)
+                .getContent();
     }
 
     private List<OrderEntity> findAllByCustomerIdAndOrderDateAndStatus(OrderFilteringDto filter) {
         return orderRepository.findAllByCustomerIdAndOrderDateIsBetweenAndStatus(filter.getCustId(),
                 filter.getFrom(),
                 filter.getTo(),
-                filter.getStatus());
+                filter.getStatus(),
+                EMPTY_PAGEABLE)
+                .getContent();
     }
 }

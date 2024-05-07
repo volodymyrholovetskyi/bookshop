@@ -36,22 +36,4 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
             LocalDate to,
             OrderStatus status,
             Pageable pageable);
-
-    List<OrderEntity> findAllByCustomerId(Long customerId);
-
-    List<OrderEntity> findAllByCustomerIdAndStatus(
-            Long customerId,
-            OrderStatus status);
-
-    List<OrderEntity> findAllByCustomerIdAndOrderDateIsBetween(
-            Long customerId,
-            LocalDate from,
-            LocalDate to);
-
-    List<OrderEntity> findAllByCustomerIdAndOrderDateIsBetweenAndStatus(
-            Long customerId,
-            LocalDate from,
-            LocalDate to,
-            OrderStatus status);
-
 }
