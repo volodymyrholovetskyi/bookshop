@@ -38,7 +38,6 @@ public class UploadOrderService {
     private final OrderJsonValidator validator;
     private final BatchOrderService batchOrderService;
 
-    @Transactional
     public UploadOrder uploadOrders(String fileName, InputStream inputStream) {
         return parseOrders(fileName, inputStream);
     }

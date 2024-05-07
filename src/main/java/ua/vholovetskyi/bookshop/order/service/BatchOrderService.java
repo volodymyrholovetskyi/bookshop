@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.vholovetskyi.bookshop.order.model.OrderEntity;
 import ua.vholovetskyi.bookshop.order.repository.OrderRepository;
 
@@ -18,6 +19,7 @@ public class BatchOrderService {
     @Value("${spring.jpa.properties.hibernate.jdbc.batch_size}")
     private int batchSize;
 
+    @Transactional
     public void batchProcessing(List<OrderEntity> orders, boolean isFinished) {
         if (!orders.isEmpty() && (orders.size() % batchSize == 0 || isFinished))
             saveAll(orders);
