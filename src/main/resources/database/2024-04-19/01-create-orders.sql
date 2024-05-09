@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS orders
     PRIMARY KEY (order_id),
     CONSTRAINT fk_customer_order_id FOREIGN KEY (cust_id)
     REFERENCES customer (cust_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS order_item
@@ -18,4 +19,5 @@ CREATE TABLE IF NOT EXISTS order_item
     order_id INT8         NOT NULL,
     CONSTRAINT fk_order_item_id FOREIGN KEY (order_id)
     REFERENCES orders (order_id)
+    ON DELETE CASCADE
 );
