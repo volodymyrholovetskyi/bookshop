@@ -12,32 +12,32 @@
 ## Api-docs
 
 - Filtering by fields:
-  - custId (required):
+  - customerId (required):
 
     ```
     {
-     "custId": 1
+     "customerId": 1
     }
     ```
-  - custId and status(NEW, PAID, CANCELED, SHIPPED):
+  - customerId and status(NEW, PAID, CANCELED, SHIPPED):
     ```
     {
-     "custId": 1,
+     "customerId": 1,
      "status": "NEW"
     }
     ```
-  - custId and order date:
+  - customerId and orderDate:
     ```
     {
-     "custId": 1,
+     "customerId": 1,
      "from": "2024-04-15",
      "to": "2024-05-15"
     }
     ```
-  - custId, status and order date:
+  - customerId, status and orderDate:
     ```
     {
-     "custId": 1,
+     "customerId": 1,
      "status": "NEW",
      "from": "2024-04-15",
      "to": "2024-05-15"
