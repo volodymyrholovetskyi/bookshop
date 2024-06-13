@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ua.vholovetskyi.bookshop.order.model.OrderStatus;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -21,6 +22,6 @@ public class OrderSummary {
 
     private Long id;
     private OrderStatus status;
-    private int totalProduct;
+    private BigDecimal grossValue;
     private LocalDate orderDate;
 }

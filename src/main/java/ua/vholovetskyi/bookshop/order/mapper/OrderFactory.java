@@ -18,7 +18,7 @@ public class OrderFactory {
     public static OrderEntity createNewOrder(OrderDto orderDto) {
         return OrderEntity.builder()
                 .customerId(orderDto.getCustomerId())
-                .items(orderDto.getItems())
+                .grossValue(orderDto.getGrossValue())
                 .status(orderDto.getStatus())
                 .orderDate(orderDto.getOrderDate())
                 .build();
@@ -28,7 +28,7 @@ public class OrderFactory {
         return OrderEntity.builder()
                 .id(id)
                 .customerId(orderDto.getCustomerId())
-                .items(orderDto.getItems())
+                .grossValue(orderDto.getGrossValue())
                 .status(orderDto.getStatus())
                 .build();
     }
@@ -36,7 +36,7 @@ public class OrderFactory {
     public static OrderEntity createNewOrder(OrderJson orderJson) {
         return OrderEntity.builder()
                 .customerId(orderJson.getCustId())
-                .items(orderJson.getItems())
+                .grossValue(orderJson.getGrossValue())
                 .status(OrderStatus.parseString(orderJson.getStatus()).orElseThrow())
                 .orderDate(LocalDate.parse(orderJson.getOrderDate()))
                 .build();
@@ -47,7 +47,7 @@ public class OrderFactory {
                 .id(newOrder.getId())
                 .orderDate(newOrder.getOrderDate())
                 .status(newOrder.getStatus())
-                .totalProduct(newOrder.getItems().size())
+                .grossValue(newOrder.getGrossValue())
                 .build();
     }
 }

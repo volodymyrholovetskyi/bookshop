@@ -1,5 +1,6 @@
 package ua.vholovetskyi.bookshop.order.validator;
 
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import ua.vholovetskyi.bookshop.commons.annotation.DateFormatValidation;
 import ua.vholovetskyi.bookshop.commons.annotation.StatusValidation;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -20,11 +22,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderJson {
-
-    @Size(min = 1)
-    private List<@NotBlank String> items;
     @NotNull
     private Long custId;
+    @NotNull
+    @DecimalMin(value = "0.00")
+    private BigDecimal grossValue;
     @StatusValidation
     private String status;
     @DateFormatValidation

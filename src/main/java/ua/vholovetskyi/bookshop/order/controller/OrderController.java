@@ -38,11 +38,12 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
 @Slf4j
+@CrossOrigin("*")
 public class OrderController {
 
     private static final CSVFormat FORMAT = CSVFormat.Builder
             .create(CSVFormat.DEFAULT)
-            .setHeader("Id", "Total product", "Status", "Order date")
+            .setHeader("Id", "Status", "Gross value", "Order date")
             .build();
     private final OrderService orderService;
     private final UploadOrderService uploadOrderService;
@@ -103,8 +104,8 @@ public class OrderController {
             for (OrderList order : orderList) {
                 printer.printRecord(Arrays.asList(
                         order.getId(),
-                        order.getTotalProduct(),
                         order.getStatus(),
+                        order.getGrossValue(),
                         order.getOrderDate()
                 ));
             }

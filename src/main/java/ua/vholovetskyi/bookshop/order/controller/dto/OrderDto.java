@@ -1,5 +1,6 @@
 package ua.vholovetskyi.bookshop.order.controller.dto;
 
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import ua.vholovetskyi.bookshop.order.model.OrderStatus;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,13 +25,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDto {
-    @Size(min = 1, message = "{order.item.min.size}")
-    private List<@NotBlank(message = "{order.field.isBlank}") String> items;
     @NotNull(message = "{order.filed.required}")
     private Long customerId;
     @NotNull(message = "{order.filed.required}")
     private OrderStatus status;
+    @NotNull
+    @DecimalMin(value = "0.00")
+    private BigDecimal grossValue;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "{order.filed.required}")
     private LocalDate orderDate;
+
 }

@@ -191,7 +191,7 @@ public abstract class OrderBuilder {
                                 .orderDate(LocalDate.of(2024, 4, 28))
                                 .build()
                 ))
-                .totalPage(5)
+                .totalOrders(5)
                 .build();
     }
 

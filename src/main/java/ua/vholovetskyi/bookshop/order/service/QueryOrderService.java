@@ -1,18 +1,16 @@
 package ua.vholovetskyi.bookshop.order.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ua.vholovetskyi.bookshop.order.controller.dto.*;
 import ua.vholovetskyi.bookshop.commons.exception.impl.order.OrderNotFoundException;
+import ua.vholovetskyi.bookshop.order.controller.dto.OrderSearchRequest;
+import ua.vholovetskyi.bookshop.order.controller.dto.OrderSearchResponse;
 import ua.vholovetskyi.bookshop.order.model.OrderEntity;
 import ua.vholovetskyi.bookshop.order.repository.OrderRepository;
 import ua.vholovetskyi.bookshop.order.service.handler.OrderSearchService;
-import java.util.List;
 
-import static ua.vholovetskyi.bookshop.order.mapper.OrderDtoMapper.*;
+import static ua.vholovetskyi.bookshop.order.mapper.OrderDtoMapper.mapToOrderSearch;
 
 
 /**
@@ -34,7 +32,7 @@ public class QueryOrderService {
 
     public OrderSearchResponse findOrders(OrderSearchRequest searchRequest) {
         var pageOrder = searchService.searchOrders(searchRequest.getSearch(), getPageRequest(searchRequest));
-        return mapToOrderSearch(pageOrder.getContent(), pageOrder.getTotalPages());
+        return mapToOrderSearch(pageOrder.getContent(), pageOrder.getTotalElements());
     }
 
     private PageRequest getPageRequest(OrderSearchRequest orderRequest) {

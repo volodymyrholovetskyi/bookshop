@@ -4,13 +4,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.vholovetskyi.bookshop.commons.exception.impl.customer.CustomerNotFoundException;
+import ua.vholovetskyi.bookshop.commons.exception.impl.order.OrderNotFoundException;
+import ua.vholovetskyi.bookshop.commons.publisher.NotificationPublisher;
+import ua.vholovetskyi.bookshop.customer.model.CustomerEntity;
 import ua.vholovetskyi.bookshop.customer.repository.CustomerRepository;
 import ua.vholovetskyi.bookshop.order.controller.dto.OrderDto;
 import ua.vholovetskyi.bookshop.order.controller.dto.OrderSummary;
-import ua.vholovetskyi.bookshop.commons.exception.impl.order.OrderNotFoundException;
 import ua.vholovetskyi.bookshop.order.model.OrderEntity;
 import ua.vholovetskyi.bookshop.order.repository.OrderRepository;
 
+import static ua.vholovetskyi.bookshop.order.mapper.OrderEmailFactory.createOrderEmail;
 import static ua.vholovetskyi.bookshop.order.mapper.OrderFactory.createNewOrder;
 import static ua.vholovetskyi.bookshop.order.mapper.OrderFactory.createOrderSummary;
 
@@ -26,10 +29,12 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
+    private final NotificationPublisher notificationPublisher;
 
     public OrderSummary createOrder(OrderDto orderDto) {
-        validateCustomerExists(orderDto.getCustomerId());
+        var loadCustomer = validateCustomerExists(orderDto.getCustomerId());
         var savedOrder = orderRepository.save(createNewOrder(orderDto));
+        notificationPublisher.publishNotification(createOrderEmail(loadCustomer, savedOrder));
         return createOrderSummary(savedOrder);
     }
 
@@ -46,9 +51,8 @@ public class OrderService {
         orderRepository.deleteById(id);
     }
 
-    private void validateCustomerExists(Long id) {
-        if (customerRepository.findById(id).isEmpty()) {
-            throw new CustomerNotFoundException(id);
-        }
+    private CustomerEntity validateCustomerExists(Long id) {
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException(id));
     }
 }

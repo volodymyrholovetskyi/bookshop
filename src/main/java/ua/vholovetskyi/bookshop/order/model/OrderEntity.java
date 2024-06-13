@@ -6,6 +6,7 @@ import ua.vholovetskyi.bookshop.order.controller.dto.OrderDto;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,30 +31,25 @@ public class OrderEntity implements Serializable {
     @SequenceGenerator(name = "orders_seq_gen", sequenceName = "orders_order_id_seq", allocationSize = 1)
     @Column(name = "order_id", nullable = false)
     private Long id;
-    @CollectionTable(
-            name = "order_item",
-            joinColumns = @JoinColumn(name = "order_id")
-    )
-    @Column(name = "item", nullable = false)
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> items = new ArrayList<>();
     @Column(name = "cust_id", nullable = false)
     private Long customerId;
     @Enumerated(EnumType.STRING)
     @Column(length = 70, nullable = false)
     private OrderStatus status;
     @Column(nullable = false)
+    private BigDecimal grossValue;
+    @Column(nullable = false)
     private LocalDate orderDate;
 
     public void updateFields(OrderDto orderDto) {
-        if (orderDto.getItems() != null && orderDto.getItems().size() > 0){
-            this.items = orderDto.getItems();
-        }
         if (customerId != null) {
             this.customerId = orderDto.getCustomerId();
         }
         if (orderDto.getStatus() != null) {
             this.status = orderDto.getStatus();
+        }
+        if (orderDto.getGrossValue() != null) {
+            this.grossValue = orderDto.getGrossValue();
         }
         if (orderDto.getOrderDate() != null){
             this.orderDate = orderDto.getOrderDate();

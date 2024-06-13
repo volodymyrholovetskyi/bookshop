@@ -67,7 +67,7 @@ class QueryOrderServiceIT extends OrderBuilder {
 
         //then
         assertThat(orders.getList().size()).isEqualTo(5);
-        assertThat(orders.getTotalPage()).isEqualTo(2);
+        assertThat(orders.getTotalOrders()).isEqualTo(2);
     }
 
     @Test
@@ -81,7 +81,7 @@ class QueryOrderServiceIT extends OrderBuilder {
 
         //then
         assertThat(orders.getList().size()).isEqualTo(4);
-        assertThat(orders.getTotalPage()).isEqualTo(1);
+        assertThat(orders.getTotalOrders()).isEqualTo(1);
     }
 
     @Test
@@ -95,7 +95,7 @@ class QueryOrderServiceIT extends OrderBuilder {
 
         //then
         assertThat(orders.getList().size()).isEqualTo(2);
-        assertThat(orders.getTotalPage()).isEqualTo(1);
+        assertThat(orders.getTotalOrders()).isEqualTo(1);
     }
 
     @Test
@@ -109,7 +109,7 @@ class QueryOrderServiceIT extends OrderBuilder {
 
         //then
         assertThat(orders.getList().size()).isEqualTo(1);
-        assertThat(orders.getTotalPage()).isEqualTo(1);
+        assertThat(orders.getTotalOrders()).isEqualTo(1);
     }
 
     @Test

@@ -5,10 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.vholovetskyi.bookshop.commons.exception.impl.customer.CustomerNotFoundException;
 import ua.vholovetskyi.bookshop.commons.exception.impl.customer.EmailAlreadyExistsException;
+import ua.vholovetskyi.bookshop.commons.publisher.NotificationPublisher;
 import ua.vholovetskyi.bookshop.customer.model.CustomerEntity;
 import ua.vholovetskyi.bookshop.customer.repository.CustomerRepository;
 
 import java.util.List;
+
+import static ua.vholovetskyi.bookshop.customer.mapper.CustomerEmailFactory.createCustomerEmail;
 
 /**
  * @author Volodymyr Holovetskyi
@@ -18,6 +21,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CustomerService {
+    private final NotificationPublisher notificationPublisher;
     private final CustomerRepository customerRepo;
 
     public List<CustomerEntity> findAll() {
@@ -27,7 +31,9 @@ public class CustomerService {
     @Transactional
     public CustomerEntity createCustomer(CustomerEntity customer) {
         validateCustomerEmailExists(customer);
-        return customerRepo.save(customer);
+        var savedCustomer = customerRepo.save(customer);
+        notificationPublisher.publishNotification(createCustomerEmail(savedCustomer));
+        return savedCustomer;
     }
 
     @Transactional

@@ -13,10 +13,10 @@ import java.util.List;
  */
 public class OrderDtoMapper {
 
-    public static OrderSearchResponse mapToOrderSearch(List<OrderEntity> orders, int totalPage) {
+    public static OrderSearchResponse mapToOrderSearch(List<OrderEntity> orders, long totalOrders) {
         return OrderSearchResponse.builder()
                 .list(mapToOrderListDto(orders))
-                .totalPage(totalPage)
+                .totalOrders(totalOrders)
                 .build();
     }
 
@@ -29,7 +29,7 @@ public class OrderDtoMapper {
     private static OrderList mapToOrderListDto(OrderEntity order) {
         return OrderList.builder()
                 .id(order.getId())
-                .totalProduct(order.getItems().size())
+                .grossValue(order.getGrossValue())
                 .status(order.getStatus())
                 .orderDate(order.getOrderDate())
                 .build();

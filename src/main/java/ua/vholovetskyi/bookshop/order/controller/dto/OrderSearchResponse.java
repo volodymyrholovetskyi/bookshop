@@ -18,5 +18,5 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderSearchResponse {
     private List<OrderList> list;
-    private int totalPage;
+    private long totalOrders;
 }

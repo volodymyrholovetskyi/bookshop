@@ -41,4 +41,8 @@ public class CustomerEntity {
     public boolean equalEmails(String anotherEmail) {
         return email.equalsIgnoreCase(anotherEmail);
     }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 }
