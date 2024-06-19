@@ -6,12 +6,12 @@ import ua.vholovetskyi.bookshop.order.model.OrderEntity;
 
 import java.util.Map;
 
-public class OrderEmailFactory {
+public class OrderNotificationFactory {
 
     private static final String SUBJECT = "Create Order";
     private static final String TEMPLATE_NAME = "order-template";
 
-    public static NotificationMessageDto createOrderEmail(CustomerEntity customer, OrderEntity order) {
+    public static NotificationMessageDto createNotification(CustomerEntity customer, OrderEntity order) {
         return NotificationMessageDto.builder()
                 .to(customer.getEmail())
                 .subject(SUBJECT)

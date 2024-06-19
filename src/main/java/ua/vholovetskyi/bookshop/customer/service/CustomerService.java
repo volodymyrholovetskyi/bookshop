@@ -11,7 +11,7 @@ import ua.vholovetskyi.bookshop.customer.repository.CustomerRepository;
 
 import java.util.List;
 
-import static ua.vholovetskyi.bookshop.customer.mapper.CustomerEmailFactory.createCustomerEmail;
+import static ua.vholovetskyi.bookshop.customer.mapper.CustomerNotificationFactory.createNotification;
 
 /**
  * @author Volodymyr Holovetskyi
@@ -32,7 +32,7 @@ public class CustomerService {
     public CustomerEntity createCustomer(CustomerEntity customer) {
         validateCustomerEmailExists(customer);
         var savedCustomer = customerRepo.save(customer);
-        notificationPublisher.publishNotification(createCustomerEmail(savedCustomer));
+        notificationPublisher.publishNotification(createNotification(savedCustomer));
         return savedCustomer;
     }
 

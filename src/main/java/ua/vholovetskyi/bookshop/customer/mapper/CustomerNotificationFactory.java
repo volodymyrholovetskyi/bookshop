@@ -5,12 +5,12 @@ import ua.vholovetskyi.bookshop.customer.model.CustomerEntity;
 
 import java.util.Map;
 
-public class CustomerEmailFactory {
+public class CustomerNotificationFactory {
 
     private static final String SUBJECT = "Registration Customer";
     private static final String TEMPLATE_NAME = "customer-template";
 
-    public static NotificationMessageDto createCustomerEmail(CustomerEntity customer) {
+    public static NotificationMessageDto createNotification(CustomerEntity customer) {
         return NotificationMessageDto.builder()
                 .to(customer.getEmail())
                 .subject(SUBJECT)

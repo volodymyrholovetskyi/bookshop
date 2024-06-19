@@ -13,7 +13,7 @@ import ua.vholovetskyi.bookshop.order.controller.dto.OrderSummary;
 import ua.vholovetskyi.bookshop.order.model.OrderEntity;
 import ua.vholovetskyi.bookshop.order.repository.OrderRepository;
 
-import static ua.vholovetskyi.bookshop.order.mapper.OrderEmailFactory.createOrderEmail;
+import static ua.vholovetskyi.bookshop.order.mapper.OrderNotificationFactory.createNotification;
 import static ua.vholovetskyi.bookshop.order.mapper.OrderFactory.createNewOrder;
 import static ua.vholovetskyi.bookshop.order.mapper.OrderFactory.createOrderSummary;
 
@@ -34,7 +34,7 @@ public class OrderService {
     public OrderSummary createOrder(OrderDto orderDto) {
         var loadCustomer = validateCustomerExists(orderDto.getCustomerId());
         var savedOrder = orderRepository.save(createNewOrder(orderDto));
-        notificationPublisher.publishNotification(createOrderEmail(loadCustomer, savedOrder));
+        notificationPublisher.publishNotification(createNotification(loadCustomer, savedOrder));
         return createOrderSummary(savedOrder);
     }
 
